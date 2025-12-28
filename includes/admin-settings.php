@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /* ------------------------------------------------------------------------- *
- * ADMIN SETTINGS PAGE - SEO WUNDERKISTE
+ * ADMIN SETTINGS PAGE - SEO WUNDERKISTE v2.2
  * ------------------------------------------------------------------------- */
 
 // 1. Menüpunkt hinzufügen
@@ -60,7 +60,7 @@ function seowk_settings_init() {
         array( 'label_for' => 'seowk_enable_seo_redirects', 'description' => 'Leitet leere Anhang-Seiten auf Beiträge um.' )
     );
 
-    /* --- NEUE MODULE (Updates) --- */
+    /* --- UPDATE MODULE (v2.1) --- */
 
     add_settings_field(
         'seowk_enable_svg', 'SVG Upload erlauben', 'seowk_checkbox_render', 'seo-wunderkiste', 'seowk_plugin_section',
@@ -88,6 +88,18 @@ function seowk_settings_init() {
         'seowk_login_protection_key', 'Türsteher Schlüssel', 'seowk_text_render', 'seo-wunderkiste', 'seowk_plugin_section',
         array( 'label_for' => 'seowk_login_protection_key', 'description' => 'Dein geheimes Wort. Login nur via: <code>wp-login.php?DEINWORT</code>. (Standard: hintereingang)' )
     );
+
+    /* --- NEUE MODULE (v2.2) --- */
+
+    add_settings_field(
+        'seowk_enable_bulk_noindex', 'Bulk NoIndex Manager', 'seowk_checkbox_render', 'seo-wunderkiste', 'seowk_plugin_section',
+        array( 'label_for' => 'seowk_enable_bulk_noindex', 'description' => 'Ermöglicht das massenhafte Setzen/Entfernen von NoIndex für Seiten und Beiträge.' )
+    );
+
+    add_settings_field(
+        'seowk_enable_comment_blocker', 'Comment Blocker', 'seowk_checkbox_render', 'seo-wunderkiste', 'seowk_plugin_section',
+        array( 'label_for' => 'seowk_enable_comment_blocker', 'description' => 'Deaktiviert Kommentare global auf der gesamten Website.' )
+    );
 }
 add_action( 'admin_init', 'seowk_settings_init' );
 
@@ -109,7 +121,7 @@ function seowk_checkbox_render( $args ) {
     <?php
 }
 
-// Text Input Render (NEU)
+// Text Input Render
 function seowk_text_render( $args ) {
     $options = get_option( 'seowk_settings' );
     $field   = $args['label_for'];
@@ -128,7 +140,7 @@ function seowk_options_page_html() {
     if ( ! current_user_can( 'manage_options' ) ) { return; }
     ?>
     <div class="wrap">
-        <h1>SEO Wunderkiste 📦✨</h1>
+        <h1>SEO Wunderkiste 📦✨ v2.2</h1>
         <form action="options.php" method="post">
             <?php
             settings_fields( 'seowk_plugin_group' );
