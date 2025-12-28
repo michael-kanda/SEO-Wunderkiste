@@ -2,7 +2,7 @@
 /**
  * Plugin Name: SEO Wunderkiste
  * Description: Deine All-in-One Lösung: SEO Schema, Bild-Optimierung, Cleaner, Security & mehr.
- * Version: 2.1
+ * Version: 2.2
  * Author: Michael Kanda
  */
 
@@ -30,8 +30,12 @@ if ( ! empty( $options['seowk_enable_image_seo'] ) ) { require_once SEOWK_PLUGIN
 if ( ! empty( $options['seowk_enable_media_columns'] ) ) { require_once SEOWK_PLUGIN_DIR . 'includes/module-media-columns.php'; }
 if ( ! empty( $options['seowk_enable_seo_redirects'] ) ) { require_once SEOWK_PLUGIN_DIR . 'includes/module-seo-redirects.php'; }
 
-// NEUE MODULE (v2.1)
+// MODULE v2.1
 if ( ! empty( $options['seowk_enable_svg'] ) ) { require_once SEOWK_PLUGIN_DIR . 'includes/module-svg.php'; }
 if ( ! empty( $options['seowk_disable_emojis'] ) ) { require_once SEOWK_PLUGIN_DIR . 'includes/module-disable-emojis.php'; }
 if ( ! empty( $options['seowk_disable_xmlrpc'] ) ) { require_once SEOWK_PLUGIN_DIR . 'includes/module-disable-xmlrpc.php'; }
 if ( ! empty( $options['seowk_enable_login_protection'] ) ) { require_once SEOWK_PLUGIN_DIR . 'includes/module-login-protection.php'; }
+
+// NEUE MODULE v2.2
+if ( ! empty( $options['seowk_enable_bulk_noindex'] ) ) { require_once SEOWK_PLUGIN_DIR . 'includes/module-bulk-noindex.php'; }
+if ( ! empty( $options['seowk_enable_comment_blocker'] ) ) { require_once SEOWK_PLUGIN_DIR . 'includes/module-comment-blocker.php'; }
