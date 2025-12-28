@@ -42,7 +42,7 @@ Du kannst unter "Einstellungen > SEO Wunderkiste" genau die Funktionen aktiviere
 10. Login Türsteher
     Schützt deinen Admin-Bereich. Die Login-Seite ist nur noch erreichbar, wenn ein geheimer Parameter an die URL angehängt wird.
 
-11. Bulk NoIndex Manager ⭐ NEU in v2.2
+11. Bulk NoIndex Manager
     Ermöglicht das massenhafte Setzen und Entfernen von NoIndex für Seiten und Beiträge direkt aus der Übersicht.
     Features:
     - Bulk-Aktionen für mehrere Einträge gleichzeitig
@@ -50,7 +50,7 @@ Du kannst unter "Einstellungen > SEO Wunderkiste" genau die Funktionen aktiviere
     - Quick-Edit Unterstützung
     - Automatische Meta-Tag-Ausgabe im Frontend
 
-12. Comment Blocker ⭐ NEU in v2.2
+12. Comment Blocker
     Deaktiviert Kommentare global auf der gesamten Website.
     Features:
     - Entfernt Kommentar-Support aus allen Post-Types
