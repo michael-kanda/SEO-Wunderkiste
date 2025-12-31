@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /* ------------------------------------------------------------------------- *
- * ADMIN SETTINGS PAGE - SEO WUNDERKISTE v2.2
+ * ADMIN SETTINGS PAGE - SEO WUNDERKISTE v2.3
  * ------------------------------------------------------------------------- */
 
 // 1. Menüpunkt hinzufügen
@@ -89,7 +89,7 @@ function seowk_settings_init() {
         array( 'label_for' => 'seowk_login_protection_key', 'description' => 'Dein geheimes Wort. Login nur via: <code>wp-login.php?DEINWORT</code>. (Standard: hintereingang)' )
     );
 
-    /* --- NEUE MODULE (v2.2) --- */
+    /* --- NEUE MODULE (v2.2 + v2.3) --- */
 
     add_settings_field(
         'seowk_enable_bulk_noindex', 'Bulk NoIndex Manager', 'seowk_checkbox_render', 'seo-wunderkiste', 'seowk_plugin_section',
@@ -99,6 +99,11 @@ function seowk_settings_init() {
     add_settings_field(
         'seowk_enable_comment_blocker', 'Comment Blocker', 'seowk_checkbox_render', 'seo-wunderkiste', 'seowk_plugin_section',
         array( 'label_for' => 'seowk_enable_comment_blocker', 'description' => 'Deaktiviert Kommentare global auf der gesamten Website.' )
+    );
+
+    add_settings_field(
+        'seowk_enable_id_column', 'ID Column Display', 'seowk_checkbox_render', 'seo-wunderkiste', 'seowk_plugin_section',
+        array( 'label_for' => 'seowk_enable_id_column', 'description' => 'Zeigt die Post/Page/Media ID in allen Übersichten an (klickbar zum Kopieren).' )
     );
 }
 add_action( 'admin_init', 'seowk_settings_init' );
@@ -140,7 +145,7 @@ function seowk_options_page_html() {
     if ( ! current_user_can( 'manage_options' ) ) { return; }
     ?>
     <div class="wrap">
-        <h1>SEO Wunderkiste 📦✨ v2.2</h1>
+        <h1>SEO Wunderkiste 📦✨ v2.3</h1>
         <form action="options.php" method="post">
             <?php
             settings_fields( 'seowk_plugin_group' );
