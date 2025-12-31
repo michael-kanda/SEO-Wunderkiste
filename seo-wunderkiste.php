@@ -2,7 +2,7 @@
 /**
  * Plugin Name: SEO Wunderkiste
  * Description: Deine All-in-One Lösung: SEO Schema, Bild-Optimierung, Cleaner, Security & mehr.
- * Version: 2.2
+ * Version: 2.3
  * Author: Michael Kanda
  */
 
@@ -22,7 +22,7 @@ $options = get_option( 'seowk_settings' );
  * 3. Module bedingt laden
  * ------------------------------------------------------------------------- */
 
-// Bestehende Module
+// Bestehende Module (v1.0)
 if ( ! empty( $options['seowk_enable_schema'] ) ) { require_once SEOWK_PLUGIN_DIR . 'includes/module-schema.php'; }
 if ( ! empty( $options['seowk_enable_resizer'] ) ) { require_once SEOWK_PLUGIN_DIR . 'includes/module-resizer.php'; }
 if ( ! empty( $options['seowk_enable_cleaner'] ) ) { require_once SEOWK_PLUGIN_DIR . 'includes/module-cleaner.php'; }
@@ -39,3 +39,6 @@ if ( ! empty( $options['seowk_enable_login_protection'] ) ) { require_once SEOWK
 // NEUE MODULE v2.2
 if ( ! empty( $options['seowk_enable_bulk_noindex'] ) ) { require_once SEOWK_PLUGIN_DIR . 'includes/module-bulk-noindex.php'; }
 if ( ! empty( $options['seowk_enable_comment_blocker'] ) ) { require_once SEOWK_PLUGIN_DIR . 'includes/module-comment-blocker.php'; }
+
+// NEUE MODULE v2.3
+if ( ! empty( $options['seowk_enable_id_column'] ) ) { require_once SEOWK_PLUGIN_DIR . 'includes/module-id-column.php'; }
