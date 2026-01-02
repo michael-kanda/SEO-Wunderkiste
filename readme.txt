@@ -1,70 +1,82 @@
-=== SEO Wunderkiste v2.4 ===
+=== SEO Wunderkiste v2.5 ===
 Die modulare Lösung für besseres WordPress SEO, Performance, Sicherheit und Verwaltung.
 
 --- BESCHREIBUNG ---
-Dieses Plugin vereint 14 leistungsstarke Funktionen in einem einzigen Tool. 
+Dieses Plugin vereint 15 leistungsstarke Funktionen in einem einzigen Tool. 
 Um die Performance deiner Seite zu schonen, sind standardmäßig alle Module deaktiviert. 
 Du kannst unter "Einstellungen > SEO Wunderkiste" genau die Funktionen aktivieren, die du benötigst.
 
 --- DIE MODULE ---
 
-=== SEO & CONTENT (4 Module) ===
+=== SEO & CONTENT (5 Module) ===
 
-1. SEO Schema (JSON-LD)
+1. SEO Meta Settings 
+   Erweiterte Meta-Tags pro Seite/Beitrag mit Live-Vorschau.
+   Features:
+   - SEO Title & Meta Description mit Zeichenzähler
+   - Robots Meta Tag (index, follow, max-image-preview, etc.)
+   - Canonical URL Steuerung
+   - Open Graph Tags (Facebook, LinkedIn, WhatsApp)
+   - Twitter Cards (summary_large_image, summary)
+   - Author & Copyright Meta
+   - Google Vorschau im Editor
+   - Status-Spalte in der Übersicht
+
+2. SEO Schema (JSON-LD)
    Fügt Beiträgen und Seiten ein Eingabefeld hinzu, um individuellen Schema.org Code (JSON-LD) in den <head> einzufügen. 
 
-2. Bulk NoIndex Manager ⭐
+3. Bulk NoIndex Manager 
    Ermöglicht das massenhafte Setzen und Entfernen von NoIndex für Seiten und Beiträge direkt aus der Übersicht.
    Features: Bulk-Aktionen, Status-Spalte, Quick-Edit, automatische Meta-Tag-Ausgabe
 
-3. SEO Zombie Killer
+4. SEO Zombie Killer
    Leitet sinnlose Anhang-Seiten (Attachment Pages), die Google nicht mag, automatisch per 301-Redirect auf den zugehörigen Beitrag um.
 
-4. Conversion Tracker ⭐ NEU
+5. Conversion Tracker
    Ermöglicht GA4 und Google Ads Conversion-Tracking auf einzelnen Seiten.
    Perfekt für: Danke-Seiten, Bestellbestätigungen, Download-Seiten
    Features: Separate Felder für GA4 und Google Ads, Conversion Value Support
 
 === BILD & MEDIA (5 Module) ===
 
-5. Image Resizer (800px)
+6. Image Resizer (800px)
    Fügt in den Mediendetails einen Button hinzu, um riesige Bilder mit einem Klick auf webfreundliche 800px herunterzuskalieren (92% Qualität).
 
-6. Upload Cleaner
+7. Upload Cleaner
    Bereinigt Dateinamen automatisch beim Upload.
    Beispiel: Aus "Mein Foto_Übersicht.JPG" wird automatisch "mein-foto-uebersicht.jpg".
 
-7. Zero-Click Image SEO
+8. Zero-Click Image SEO
    Generiert aus dem Dateinamen automatisch den Bild-Titel und den Alt-Text (Alternativtext) für Google. 
    Beispiel: "mein-neues-projekt.jpg" erzeugt den Alt-Text "Mein Neues Projekt". 
 
-8. Media Inspector
+9. Media Inspector
    Zeigt in der Medienübersicht (Listenansicht) zwei neue Spalten an:
    - Dateigröße (KB/MB)
    - Abmessungen (Pixel)
 
-9. SVG Upload Support
-   Erlaubt das Hochladen von SVG-Dateien in die Mediathek (standardmäßig von WordPress blockiert).
+10. SVG Upload Support
+    Erlaubt das Hochladen von SVG-Dateien in die Mediathek (standardmäßig von WordPress blockiert).
 
 === PERFORMANCE (1 Modul) ===
 
-10. Emoji Bloat Remover
+11. Emoji Bloat Remover
     Entfernt das unnötige JavaScript und CSS für WordPress-Emojis. Das macht die Seite messbar schneller.
 
 === SICHERHEIT & ADMIN (4 Module) ===
 
-11. XML-RPC Blocker
+12. XML-RPC Blocker
     Deaktiviert die XML-RPC Schnittstelle. Dies schützt deine Seite effektiv vor Brute-Force-Angriffen und unnötiger Serverlast.
 
-12. Login Türsteher
+13. Login Türsteher
     Schützt deinen Admin-Bereich. Die Login-Seite ist nur noch erreichbar, wenn ein geheimer Parameter an die URL angehängt wird.
     Konfigurierbarer Schlüssel (Standard: "hintereingang")
 
-13. Comment Blocker ⭐
+14. Comment Blocker
     Deaktiviert Kommentare global auf der gesamten Website.
     Features: Entfernt alle Kommentar-Menüs, schließt bestehende Kommentare, Bulk-Aktion
 
-14. ID Column Display ⭐ NEU
+15. ID Column Display
     Zeigt die Post/Page/Media ID in allen Übersichten an (klickbar zum Kopieren).
     Features: Funktioniert für alle Post-Types, sortierbar, One-Click-Copy
 
@@ -77,6 +89,22 @@ Du kannst unter "Einstellungen > SEO Wunderkiste" genau die Funktionen aktiviere
 4.  Setze Haken bei den Modulen, die du nutzen möchtest, und klicke auf "Speichern". 
 
 --- BENUTZUNG ---
+
+> Wie nutze ich die SEO Meta Settings? (NEU)
+1. Aktiviere das Modul in den Einstellungen
+2. Öffne eine beliebige Seite oder einen Beitrag
+3. Unterhalb des Editors findest du die Box "🔍 SEO Meta Einstellungen"
+4. Nutze die Tabs (Basis SEO, Open Graph, Twitter, Erweitert) um alle Meta-Tags einzustellen
+5. Die Google Vorschau zeigt dir live, wie dein Snippet aussehen wird
+6. Die Spalte "🔍 SEO" in der Übersicht zeigt den Optimierungsgrad an
+
+Ausgabe im Frontend:
+- <title> Tag wird automatisch überschrieben
+- Meta Description, Robots, Canonical
+- Open Graph Tags für Facebook, LinkedIn, WhatsApp
+- Twitter Card Tags
+- Author & Copyright Meta
+- Format-Detection für Telefonnummern
 
 > Wie nutze ich das Schema-Feld?
 Gehe in einen Beitrag oder eine Seite. Unter dem Editor findest du die Box "Strukturierte Daten". 
@@ -124,7 +152,23 @@ Es ist kein weiteres Zutun nötig.
 
 --- CHANGELOG ---
 
-v2.4 (2024) 🎉 MAJOR UPDATE
+v2.5 
+- NEU: SEO Meta Settings Modul mit vollständigen Meta-Tags
+  - SEO Title & Meta Description mit Live-Vorschau
+  - Robots Meta Tag Kontrolle
+  - Canonical URL Steuerung
+  - Open Graph Tags (og:title, og:description, og:image, og:type, etc.)
+  - Twitter Card Tags (twitter:card, twitter:title, twitter:description, twitter:image)
+  - Author & Copyright Meta
+  - Zeichenzähler mit Empfehlungen (60/160 Zeichen)
+  - Tab-basierte Benutzeroberfläche
+  - Media Uploader Integration für Bilder
+  - SEO-Status-Spalte in der Übersicht
+  - Automatische Fallbacks (OG → Twitter, Titel → Meta Description)
+- Verbessert: Modul-Anzahl jetzt 15 Module
+- Aktualisiert: Version auf 2.5
+
+v2.4
 - NEU: Conversion Tracker für GA4 und Google Ads
 - NEU: ID Column Display mit Copy-Funktion
 - NEU: Komplett überarbeitete Admin-Oberfläche
@@ -135,16 +179,16 @@ v2.4 (2024) 🎉 MAJOR UPDATE
 - Verbessert: Performance-Optimierung beim Laden der Module
 - Fix: Diverse kleine Bugfixes
 
-v2.3 (2024)
+v2.3 
 - NEU: ID Column Display mit klickbarer Copy-Funktion
 - Verbessert: Optimierte Performance bei modularer Ladung
 
-v2.2 (2024)
+v2.2 
 - NEU: Bulk NoIndex Manager mit Quick-Edit und Spaltenanzeige
 - NEU: Comment Blocker für globale Kommentar-Deaktivierung
 - Verbessert: Bessere Organisation der Einstellungen
 
-v2.1 (2024)
+v2.1 
 - NEU: SVG Upload Support
 - NEU: Emoji Bloat Remover
 - NEU: XML-RPC Blocker
@@ -158,10 +202,11 @@ v2.0 (Initial Release)
 
 includes/
 ├── admin-settings.php           # Admin-Einstellungsseite
+├── module-meta-settings.php    # SEO Meta Settings ⭐ NEU
 ├── module-schema.php           # SEO Schema
 ├── module-bulk-noindex.php     # NoIndex Manager
 ├── module-seo-redirects.php    # Zombie Killer
-├── module-conversion-tracker.php # Conversion Tracking ⭐ NEU
+├── module-conversion-tracker.php # Conversion Tracking
 ├── module-resizer.php          # Image Resizer
 ├── module-cleaner.php          # Upload Cleaner
 ├── module-image-seo.php        # Image SEO
@@ -171,7 +216,31 @@ includes/
 ├── module-disable-xmlrpc.php   # XML-RPC Blocker
 ├── module-login-protection.php # Login Türsteher
 ├── module-comment-blocker.php  # Comment Blocker
-└── module-id-column.php        # ID Display ⭐ NEU
+└── module-id-column.php        # ID Display
+
+--- META TAGS BEISPIEL (SEO Meta Settings Output) ---
+
+<!-- SEO Wunderkiste - Meta Settings -->
+<title>IT-Beratung & Cloud Lösungen in Hamburg | TechSolutions GmbH</title>
+<meta name="description" content="Wir optimieren Ihre IT-Infrastruktur...">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<link rel="canonical" href="https://www.example.com/seite/">
+<meta property="og:locale" content="de_DE">
+<meta property="og:type" content="website">
+<meta property="og:title" content="IT-Beratung & Cloud Lösungen">
+<meta property="og:description" content="Sichere IT-Lösungen...">
+<meta property="og:url" content="https://www.example.com/seite/">
+<meta property="og:site_name" content="TechSolutions GmbH">
+<meta property="og:image" content="https://www.example.com/bild.jpg">
+<meta property="og:image:alt" content="Team im Meeting">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IT-Beratung & Cloud Lösungen">
+<meta name="twitter:description" content="Sichere IT-Lösungen...">
+<meta name="twitter:image" content="https://www.example.com/bild.jpg">
+<meta name="author" content="TechSolutions GmbH">
+<meta name="copyright" content="TechSolutions GmbH">
+<meta name="format-detection" content="telephone=yes">
+<!-- /SEO Wunderkiste -->
 
 --- ANFORDERUNGEN ---
 * WordPress Version: 5.0 oder höher
