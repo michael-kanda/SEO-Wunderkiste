@@ -2,8 +2,8 @@
 /**
  * Plugin Name: SEO Wunderkiste
  * Plugin URI: https://example.com/seo-wunderkiste
- * Description: Deine modulare All-in-One Lösung: SEO Schema, Bild-Optimierung, Cleaner, Security, Tracking & mehr.
- * Version: 2.4
+ * Description: Deine modulare All-in-One Lösung: SEO Schema, Meta Settings, Bild-Optimierung, Cleaner, Security, Tracking & mehr.
+ * Version: 2.5
  * Author: Michael Kanda
  * Author URI: https://example.com
  * License: GPL-2.0+
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * PLUGIN CONSTANTS
  * ------------------------------------------------------------------------- */
 
-define( 'SEOWK_VERSION', '2.4' );
+define( 'SEOWK_VERSION', '2.5' );
 define( 'SEOWK_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SEOWK_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'SEOWK_PLUGIN_FILE', __FILE__ );
@@ -45,6 +45,10 @@ $options = get_option( 'seowk_settings', array() );
  * ------------------------------------------------------------------------- */
 
 // SEO & CONTENT MODULE
+if ( ! empty( $options['seowk_enable_meta_settings'] ) ) {
+    require_once SEOWK_PLUGIN_DIR . 'includes/module-meta-settings.php';
+}
+
 if ( ! empty( $options['seowk_enable_schema'] ) ) {
     require_once SEOWK_PLUGIN_DIR . 'includes/module-schema.php';
 }
@@ -251,6 +255,7 @@ add_action( 'admin_footer', 'seowk_admin_footer_debug' );
 function seowk_get_available_modules() {
     return array(
         'seo_content' => array(
+            'seowk_enable_meta_settings' => 'SEO Meta Settings',
             'seowk_enable_schema' => 'SEO Schema (JSON-LD)',
             'seowk_enable_bulk_noindex' => 'Bulk NoIndex Manager',
             'seowk_enable_seo_redirects' => 'SEO Zombie Killer',
