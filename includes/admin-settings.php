@@ -35,7 +35,7 @@ function seowk_settings_init() {
     
     add_settings_field(
         'seowk_enable_meta_settings',
-        'SEO Meta Settings ⭐ NEU',
+        'SEO Meta Settings',
         'seowk_checkbox_render',
         'seo-wunderkiste',
         'seowk_plugin_section',
