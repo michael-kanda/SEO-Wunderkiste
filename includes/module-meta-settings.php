@@ -74,23 +74,102 @@ function seowk_meta_render_meta_box( $post ) {
             
             <!-- SONDERZEICHEN BOX -->
             <div style="background: #f9f9f9; border: 1px solid #ddd; padding: 12px 15px; margin-bottom: 20px; border-radius: 4px;">
-                <strong style="display: block; margin-bottom: 8px;">📋 Sonderzeichen zum Kopieren:</strong>
-                <div style="font-size: 16px; letter-spacing: 3px; line-height: 2; user-select: all;">
-                    <span title="Aufzählungszeichen">• ‣ ◦ ▪ ▸ ►</span> | 
-                    <span title="Häkchen & Kreuze">✓ ✔ ☑ ✗ ✘ ☒</span> | 
-                    <span title="Pfeile">→ ← ↑ ↓ ⇒ ⇐ ➔ ➜ ➤</span> | 
-                    <span title="Sterne">★ ☆ ✦ ✧ ⭐</span> | 
-                    <span title="Herzen">♥ ♡ ❤ 💚 💙</span> | 
-                    <span title="Telefon & Mail">☎ ✆ ✉ 📞 📧</span> | 
-                    <span title="Standort">📍 🏠 🏢</span> | 
-                    <span title="Zeit & Datum">⏰ 📅 🕐</span> | 
-                    <span title="Währung">€ $ £ ¥</span> | 
-                    <span title="Sonstiges">© ® ™ § ¶ † ‡ № ° ‰</span> | 
-                    <span title="Trenner">| · — – ‖ ⁄</span> | 
-                    <span title="Anführungszeichen">„" ‚' »« ›‹ "" ''</span>
+                <strong style="display: block; margin-bottom: 8px;">📋 Sonderzeichen zum Kopieren <span style="font-weight: normal; color: #666;">(Klick = Kopieren)</span>:</strong>
+                <div class="seowk-special-chars" style="font-size: 18px; line-height: 2.2;">
+                    <span class="seowk-char-group">
+                        <span class="seowk-char" title="Bullet">•</span>
+                        <span class="seowk-char" title="Triangular Bullet">‣</span>
+                        <span class="seowk-char" title="White Bullet">◦</span>
+                        <span class="seowk-char" title="Black Square">▪</span>
+                        <span class="seowk-char" title="Triangle Right">▸</span>
+                        <span class="seowk-char" title="Triangle Right Filled">►</span>
+                    </span>
+                    <span class="seowk-char-sep">|</span>
+                    <span class="seowk-char-group">
+                        <span class="seowk-char" title="Checkmark">✓</span>
+                        <span class="seowk-char" title="Heavy Checkmark">✔</span>
+                        <span class="seowk-char" title="Checkbox Checked">☑</span>
+                        <span class="seowk-char" title="Cross">✗</span>
+                        <span class="seowk-char" title="Heavy Cross">✘</span>
+                        <span class="seowk-char" title="Checkbox X">☒</span>
+                    </span>
+                    <span class="seowk-char-sep">|</span>
+                    <span class="seowk-char-group">
+                        <span class="seowk-char" title="Arrow Right">→</span>
+                        <span class="seowk-char" title="Arrow Left">←</span>
+                        <span class="seowk-char" title="Arrow Up">↑</span>
+                        <span class="seowk-char" title="Arrow Down">↓</span>
+                        <span class="seowk-char" title="Double Arrow Right">⇒</span>
+                        <span class="seowk-char" title="Double Arrow Left">⇐</span>
+                        <span class="seowk-char" title="Heavy Arrow">➔</span>
+                        <span class="seowk-char" title="Heavy Arrow 2">➜</span>
+                        <span class="seowk-char" title="Triangle Arrow">➤</span>
+                    </span>
+                    <span class="seowk-char-sep">|</span>
+                    <span class="seowk-char-group">
+                        <span class="seowk-char" title="Star Filled">★</span>
+                        <span class="seowk-char" title="Star Empty">☆</span>
+                        <span class="seowk-char" title="Four Star">✦</span>
+                        <span class="seowk-char" title="Four Star Empty">✧</span>
+                        <span class="seowk-char" title="Star Emoji">⭐</span>
+                    </span>
+                    <span class="seowk-char-sep">|</span>
+                    <span class="seowk-char-group">
+                        <span class="seowk-char" title="Heart Filled">♥</span>
+                        <span class="seowk-char" title="Heart Empty">♡</span>
+                        <span class="seowk-char" title="Heart Emoji">❤</span>
+                    </span>
+                    <span class="seowk-char-sep">|</span>
+                    <span class="seowk-char-group">
+                        <span class="seowk-char" title="Phone">☎</span>
+                        <span class="seowk-char" title="Phone 2">✆</span>
+                        <span class="seowk-char" title="Envelope">✉</span>
+                        <span class="seowk-char" title="Phone Emoji">📞</span>
+                        <span class="seowk-char" title="Email Emoji">📧</span>
+                        <span class="seowk-char" title="Location">📍</span>
+                        <span class="seowk-char" title="House">🏠</span>
+                        <span class="seowk-char" title="Building">🏢</span>
+                    </span>
+                    <span class="seowk-char-sep">|</span>
+                    <span class="seowk-char-group">
+                        <span class="seowk-char" title="Euro">€</span>
+                        <span class="seowk-char" title="Dollar">$</span>
+                        <span class="seowk-char" title="Pound">£</span>
+                        <span class="seowk-char" title="Yen">¥</span>
+                    </span>
+                    <span class="seowk-char-sep">|</span>
+                    <span class="seowk-char-group">
+                        <span class="seowk-char" title="Copyright">©</span>
+                        <span class="seowk-char" title="Registered">®</span>
+                        <span class="seowk-char" title="Trademark">™</span>
+                        <span class="seowk-char" title="Paragraph">§</span>
+                        <span class="seowk-char" title="Pilcrow">¶</span>
+                        <span class="seowk-char" title="Degree">°</span>
+                        <span class="seowk-char" title="Numero">№</span>
+                        <span class="seowk-char" title="Per Mille">‰</span>
+                    </span>
+                    <span class="seowk-char-sep">|</span>
+                    <span class="seowk-char-group">
+                        <span class="seowk-char" title="Pipe">|</span>
+                        <span class="seowk-char" title="Middle Dot">·</span>
+                        <span class="seowk-char" title="Em Dash">—</span>
+                        <span class="seowk-char" title="En Dash">–</span>
+                        <span class="seowk-char" title="Bullet Operator">∙</span>
+                    </span>
+                    <span class="seowk-char-sep">|</span>
+                    <span class="seowk-char-group">
+                        <span class="seowk-char" title="German Open Quote">„</span>
+                        <span class="seowk-char" title="German Close Quote">"</span>
+                        <span class="seowk-char" title="Single Open Quote">‚</span>
+                        <span class="seowk-char" title="Single Close Quote">'</span>
+                        <span class="seowk-char" title="Guillemet Left">»</span>
+                        <span class="seowk-char" title="Guillemet Right">«</span>
+                        <span class="seowk-char" title="Single Guillemet Left">›</span>
+                        <span class="seowk-char" title="Single Guillemet Right">‹</span>
+                    </span>
                 </div>
-                <p style="font-size: 11px; color: #666; margin: 8px 0 0 0;">
-                    💡 Klicke auf ein Zeichen und kopiere es mit <kbd style="background:#eee;padding:2px 5px;border-radius:3px;">Strg+C</kbd> / <kbd style="background:#eee;padding:2px 5px;border-radius:3px;">⌘+C</kbd>
+                <p class="seowk-copy-feedback" style="font-size: 12px; color: #00a32a; margin: 8px 0 0 0; display: none; font-weight: 600;">
+                    ✓ Kopiert!
                 </p>
             </div>
             
@@ -262,6 +341,38 @@ function seowk_meta_render_meta_box( $post ) {
     }
     .seowk-char-counter.warning { color: #d63638 !important; font-weight: bold; }
     .seowk-char-counter.ok { color: #00a32a !important; }
+    
+    /* Sonderzeichen Styles */
+    .seowk-special-chars { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+    .seowk-char-group { display: inline-flex; gap: 2px; }
+    .seowk-char-sep { color: #ccc; margin: 0 6px; font-size: 14px; }
+    .seowk-char {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: all 0.15s ease;
+        background: #fff;
+        border: 1px solid #ddd;
+    }
+    .seowk-char:hover {
+        background: #2271b1;
+        color: #fff;
+        border-color: #2271b1;
+        transform: scale(1.15);
+    }
+    .seowk-char:active {
+        transform: scale(0.95);
+        background: #135e96;
+    }
+    .seowk-char.copied {
+        background: #00a32a !important;
+        border-color: #00a32a !important;
+        color: #fff !important;
+    }
     </style>
     
     <script>
@@ -325,6 +436,42 @@ function seowk_meta_render_meta_box( $post ) {
             
             frame.open();
         });
+        
+        // Sonderzeichen Copy-to-Clipboard
+        $('.seowk-char').on('click', function() {
+            var $char = $(this);
+            var char = $char.text();
+            
+            // In Zwischenablage kopieren
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(char).then(function() {
+                    showCopyFeedback($char);
+                });
+            } else {
+                // Fallback für ältere Browser
+                var tempInput = $('<input>');
+                $('body').append(tempInput);
+                tempInput.val(char).select();
+                document.execCommand('copy');
+                tempInput.remove();
+                showCopyFeedback($char);
+            }
+        });
+        
+        function showCopyFeedback($char) {
+            // Visuelles Feedback am Zeichen
+            $char.addClass('copied');
+            setTimeout(function() {
+                $char.removeClass('copied');
+            }, 300);
+            
+            // Feedback-Text anzeigen
+            var $feedback = $('.seowk-copy-feedback');
+            $feedback.text('✓ „' + $char.text() + '" kopiert!').fadeIn(100);
+            setTimeout(function() {
+                $feedback.fadeOut(300);
+            }, 1200);
+        }
     });
     </script>
     <?php
