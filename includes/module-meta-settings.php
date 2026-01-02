@@ -64,13 +64,35 @@ function seowk_meta_render_meta_box( $post ) {
         <div class="seowk-tabs" style="border-bottom: 1px solid #ccc; margin-bottom: 20px;">
             <button type="button" class="seowk-tab-btn active" data-tab="basic" style="padding: 10px 20px; border: none; background: #f0f0f0; cursor: pointer; font-weight: 600;">📝 Basis SEO</button>
             <button type="button" class="seowk-tab-btn" data-tab="opengraph" style="padding: 10px 20px; border: none; background: transparent; cursor: pointer;">📘 Open Graph</button>
-            <button type="button" class="seowk-tab-btn" data-tab="twitter" style="padding: 10px 20px; border: none; background: transparent; cursor: pointer;">🐦 Twitter</button>
+            <button type="button" class="seowk-tab-btn" data-tab="twitter" style="padding: 10px 20px; border: none; background: transparent; cursor: pointer;">𝕏 X (Twitter)</button>
             <button type="button" class="seowk-tab-btn" data-tab="advanced" style="padding: 10px 20px; border: none; background: transparent; cursor: pointer;">⚙️ Erweitert</button>
         </div>
         
         <!-- TAB: BASIC SEO -->
         <div class="seowk-tab-content active" data-tab="basic">
             <h4 style="margin-top: 0; color: #1d2327;">Basis SEO Einstellungen</h4>
+            
+            <!-- SONDERZEICHEN BOX -->
+            <div style="background: #f9f9f9; border: 1px solid #ddd; padding: 12px 15px; margin-bottom: 20px; border-radius: 4px;">
+                <strong style="display: block; margin-bottom: 8px;">📋 Sonderzeichen zum Kopieren:</strong>
+                <div style="font-size: 16px; letter-spacing: 3px; line-height: 2; user-select: all;">
+                    <span title="Aufzählungszeichen">• ‣ ◦ ▪ ▸ ►</span> | 
+                    <span title="Häkchen & Kreuze">✓ ✔ ☑ ✗ ✘ ☒</span> | 
+                    <span title="Pfeile">→ ← ↑ ↓ ⇒ ⇐ ➔ ➜ ➤</span> | 
+                    <span title="Sterne">★ ☆ ✦ ✧ ⭐</span> | 
+                    <span title="Herzen">♥ ♡ ❤ 💚 💙</span> | 
+                    <span title="Telefon & Mail">☎ ✆ ✉ 📞 📧</span> | 
+                    <span title="Standort">📍 🏠 🏢</span> | 
+                    <span title="Zeit & Datum">⏰ 📅 🕐</span> | 
+                    <span title="Währung">€ $ £ ¥</span> | 
+                    <span title="Sonstiges">© ® ™ § ¶ † ‡ № ° ‰</span> | 
+                    <span title="Trenner">| · — – ‖ ⁄</span> | 
+                    <span title="Anführungszeichen">„" ‚' »« ›‹ "" ''</span>
+                </div>
+                <p style="font-size: 11px; color: #666; margin: 8px 0 0 0;">
+                    💡 Klicke auf ein Zeichen und kopiere es mit <kbd style="background:#eee;padding:2px 5px;border-radius:3px;">Strg+C</kbd> / <kbd style="background:#eee;padding:2px 5px;border-radius:3px;">⌘+C</kbd>
+                </p>
+            </div>
             
             <p style="margin: 15px 0 5px 0;">
                 <label style="font-weight: 600; display: block; margin-bottom: 5px;">
@@ -158,11 +180,11 @@ function seowk_meta_render_meta_box( $post ) {
         
         <!-- TAB: TWITTER -->
         <div class="seowk-tab-content" data-tab="twitter" style="display: none;">
-            <h4 style="margin-top: 0; color: #1d2327;">Twitter Card Einstellungen</h4>
+            <h4 style="margin-top: 0; color: #1d2327;">𝕏 X (Twitter) Card Einstellungen</h4>
             
             <p style="margin: 15px 0 5px 0;">
                 <label style="font-weight: 600; display: block; margin-bottom: 5px;">
-                    Twitter Card Type
+                    X Card Type
                 </label>
                 <select name="seowk_twitter_card" class="regular-text">
                     <option value="summary_large_image" <?php selected( $twitter_card, 'summary_large_image' ); ?>>summary_large_image (Großes Bild)</option>
@@ -172,21 +194,21 @@ function seowk_meta_render_meta_box( $post ) {
             
             <p style="margin: 15px 0 5px 0;">
                 <label style="font-weight: 600; display: block; margin-bottom: 5px;">
-                    Twitter Title <span style="color: #999; font-weight: normal;">(leer = OG/SEO Title verwenden)</span>
+                    X Title <span style="color: #999; font-weight: normal;">(leer = OG/SEO Title verwenden)</span>
                 </label>
-                <input type="text" name="seowk_twitter_title" value="<?php echo esc_attr( $twitter_title ); ?>" class="large-text" placeholder="Titel für Twitter" />
+                <input type="text" name="seowk_twitter_title" value="<?php echo esc_attr( $twitter_title ); ?>" class="large-text" placeholder="Titel für X" />
             </p>
             
             <p style="margin: 15px 0 5px 0;">
                 <label style="font-weight: 600; display: block; margin-bottom: 5px;">
-                    Twitter Description <span style="color: #999; font-weight: normal;">(leer = OG/Meta Description verwenden)</span>
+                    X Description <span style="color: #999; font-weight: normal;">(leer = OG/Meta Description verwenden)</span>
                 </label>
-                <textarea name="seowk_twitter_description" rows="2" class="large-text" placeholder="Beschreibung für Twitter"><?php echo esc_textarea( $twitter_description ); ?></textarea>
+                <textarea name="seowk_twitter_description" rows="2" class="large-text" placeholder="Beschreibung für X"><?php echo esc_textarea( $twitter_description ); ?></textarea>
             </p>
             
             <p style="margin: 15px 0 5px 0;">
                 <label style="font-weight: 600; display: block; margin-bottom: 5px;">
-                    Twitter Image URL <span style="color: #999; font-weight: normal;">(leer = OG Image verwenden)</span>
+                    X Image URL <span style="color: #999; font-weight: normal;">(leer = OG Image verwenden)</span>
                 </label>
                 <input type="url" name="seowk_twitter_image" id="seowk_twitter_image" value="<?php echo esc_attr( $twitter_image ); ?>" class="large-text" placeholder="https://www.example.com/twitter-bild.jpg" />
                 <button type="button" class="button seowk-media-upload" data-target="seowk_twitter_image" style="margin-top: 5px;">Bild auswählen</button>
