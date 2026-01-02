@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /* ------------------------------------------------------------------------- *
- * ADMIN SETTINGS PAGE - SEO WUNDERKISTE v2.4
+ * ADMIN SETTINGS PAGE - SEO WUNDERKISTE v2.5
  * Alle Module in einer zentralen Übersicht
  * ------------------------------------------------------------------------- */
 
@@ -32,6 +32,18 @@ function seowk_settings_init() {
     /* ------------------------------------------------------------------------- *
      * SEO & CONTENT MODULE
      * ------------------------------------------------------------------------- */
+    
+    add_settings_field(
+        'seowk_enable_meta_settings',
+        'SEO Meta Settings ⭐ NEU',
+        'seowk_checkbox_render',
+        'seo-wunderkiste',
+        'seowk_plugin_section',
+        array(
+            'label_for' => 'seowk_enable_meta_settings',
+            'description' => 'Erweiterte Meta-Tags: Title, Description, Open Graph, Twitter Cards pro Seite.'
+        )
+    );
     
     add_settings_field(
         'seowk_enable_schema',
@@ -288,7 +300,7 @@ function seowk_options_page_html() {
         <h1 style="display: flex; align-items: center; gap: 10px;">
             <span>📦</span>
             <span>SEO Wunderkiste</span>
-            <span style="font-size: 14px; background: #2271b1; color: white; padding: 4px 12px; border-radius: 3px;">v2.4</span>
+            <span style="font-size: 14px; background: #2271b1; color: white; padding: 4px 12px; border-radius: 3px;">v2.5</span>
         </h1>
         
         <p style="font-size: 16px; margin: 20px 0;">
@@ -312,7 +324,7 @@ function seowk_options_page_html() {
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
                 <div style="padding: 10px; background: #f9f9f9; border-radius: 3px;">
                     <strong>SEO & Content</strong>
-                    <div style="font-size: 12px; color: #666; margin-top: 5px;">4 Module</div>
+                    <div style="font-size: 12px; color: #666; margin-top: 5px;">5 Module</div>
                 </div>
                 <div style="padding: 10px; background: #f9f9f9; border-radius: 3px;">
                     <strong>Bild & Media</strong>
