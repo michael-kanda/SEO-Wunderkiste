@@ -256,6 +256,18 @@ function seowk_settings_init() {
             'description' => 'Fügt aktuelles Datum via Shortcode ein. Flexibel: 01.02.2026, Februar 2026, nur Jahr, mit Zeitzone etc.'
         )
     );
+
+    add_settings_field(
+        'seowk_enable_semantic_blocks',
+        'Semantic Blocks',
+        'seowk_checkbox_render',
+        'seo-wunderkiste',
+        'seowk_plugin_section',
+        array(
+            'label_for' => 'seowk_enable_semantic_blocks',
+            'description' => 'HTML5 Wrapper-Blöcke: &lt;article&gt;, &lt;section&gt;, &lt;aside&gt;, &lt;figure&gt;, &lt;details&gt;, &lt;mark&gt; und mehr.'
+        )
+    );
 }
 add_action( 'admin_init', 'seowk_settings_init' );
 
@@ -316,7 +328,7 @@ function seowk_options_page_html() {
         <h1 style="display: flex; align-items: center; gap: 10px;">
             <span>📦</span>
             <span>SEO Wunderkiste</span>
-            <span style="font-size: 14px; background: #2271b1; color: white; padding: 4px 12px; border-radius: 3px;">v2.6</span>
+            <span style="font-size: 14px; background: #2271b1; color: white; padding: 4px 12px; border-radius: 3px;">v2.7</span>
         </h1>
         
         <p style="font-size: 16px; margin: 20px 0;">
@@ -356,7 +368,7 @@ function seowk_options_page_html() {
                 </div>
                 <div style="padding: 10px; background: #f9f9f9; border-radius: 3px;">
                     <strong>Content Tools</strong>
-                    <div style="font-size: 12px; color: #666; margin-top: 5px;">1 Modul</div>
+                    <div style="font-size: 12px; color: #666; margin-top: 5px;">2 Module</div>
                 </div>
             </div>
         </div>
