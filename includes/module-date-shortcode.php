@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 /* ------------------------------------------------------------------------- *
  * MODUL: DATE SHORTCODE - SEO Wunderkiste
  * Fügt aktuelles Datum via Shortcode ein mit flexiblen Formatierungsoptionen
+ * Inklusive Gutenberg Block mit Live-Vorschau
  * ------------------------------------------------------------------------- */
 
 /**
@@ -30,7 +31,6 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  * - us:            02/01/2026
  * - time:          14:30
  * - datetime:      01.02.2026 14:30
- * - relative:      vor 2 Stunden (nicht unterstützt, zeigt aktuelles Datum)
  * 
  * Beispiele:
  * [seowk_date]                                    → 01.02.2026 (Standard)
@@ -116,34 +116,27 @@ function seowk_get_timezone_options() {
 }
 
 /**
- * Hauptfunktion: Shortcode Handler
+ * Generiert das formatierte Datum (wird von Shortcode und Block genutzt)
  */
-function seowk_date_shortcode( $atts ) {
+function seowk_generate_date_output( $atts ) {
     // Attribute mit Defaults
-    $atts = shortcode_atts(
-        array(
-            'format'   => 'numeric',      // Preset-Name oder PHP-Format
-            'timezone' => '',             // Leer = WordPress-Standard
-            'prefix'   => '',             // Text vor dem Datum
-            'suffix'   => '',             // Text nach dem Datum
-            'wrapper'  => '',             // HTML-Tag (span, time, etc.)
-            'class'    => '',             // CSS-Klasse
-            'id'       => '',             // ID für das Element
-            'lang'     => 'de',           // Sprache (de/en)
-        ),
-        $atts,
-        'seowk_date'
-    );
+    $atts = wp_parse_args( $atts, array(
+        'format'   => 'numeric',
+        'timezone' => '',
+        'prefix'   => '',
+        'suffix'   => '',
+        'wrapper'  => '',
+        'class'    => '',
+        'id'       => '',
+        'lang'     => 'de',
+    ) );
 
     // Zeitzone setzen
-    $original_timezone = date_default_timezone_get();
-    
     if ( ! empty( $atts['timezone'] ) ) {
         try {
             $tz = new DateTimeZone( $atts['timezone'] );
             $datetime = new DateTime( 'now', $tz );
         } catch ( Exception $e ) {
-            // Fallback auf WordPress-Zeitzone
             $datetime = new DateTime( 'now', wp_timezone() );
         }
     } else {
@@ -159,13 +152,11 @@ function seowk_date_shortcode( $atts ) {
 
     // Deutsche Übersetzung (wenn lang=de)
     if ( $atts['lang'] === 'de' ) {
-        // Monatsnamen ersetzen
         $months = seowk_get_german_months();
         $english_months = array( 'January', 'February', 'March', 'April', 'May', 'June', 
                                   'July', 'August', 'September', 'October', 'November', 'December' );
         $date_output = str_replace( $english_months, array_values( $months ), $date_output );
 
-        // Wochentage ersetzen
         $weekdays = seowk_get_german_weekdays();
         $date_output = str_replace( array_keys( $weekdays ), array_values( $weekdays ), $date_output );
     }
@@ -188,7 +179,6 @@ function seowk_date_shortcode( $atts ) {
             $attributes .= ' id="' . esc_attr( $atts['id'] ) . '"';
         }
         
-        // Für <time> das datetime-Attribut hinzufügen
         if ( $tag === 'time' ) {
             $attributes .= ' datetime="' . $datetime->format( 'c' ) . '"';
         }
@@ -198,38 +188,443 @@ function seowk_date_shortcode( $atts ) {
 
     return $date_output;
 }
+
+/**
+ * Hauptfunktion: Shortcode Handler
+ */
+function seowk_date_shortcode( $atts ) {
+    $atts = shortcode_atts(
+        array(
+            'format'   => 'numeric',
+            'timezone' => '',
+            'prefix'   => '',
+            'suffix'   => '',
+            'wrapper'  => '',
+            'class'    => '',
+            'id'       => '',
+            'lang'     => 'de',
+        ),
+        $atts,
+        'seowk_date'
+    );
+
+    return seowk_generate_date_output( $atts );
+}
 add_shortcode( 'seowk_date', 'seowk_date_shortcode' );
 
 /**
  * Alternative kürzere Shortcodes für häufige Anwendungen
  */
-
-// [datum] - Alias für [seowk_date]
 function seowk_datum_shortcode( $atts ) {
     return seowk_date_shortcode( $atts );
 }
 add_shortcode( 'datum', 'seowk_datum_shortcode' );
 
-// [jahr] - Nur das Jahr
 function seowk_jahr_shortcode( $atts ) {
+    $atts = is_array( $atts ) ? $atts : array();
     $atts['format'] = 'year';
     return seowk_date_shortcode( $atts );
 }
 add_shortcode( 'jahr', 'seowk_jahr_shortcode' );
 
-// [monat] - Nur der Monat
 function seowk_monat_shortcode( $atts ) {
+    $atts = is_array( $atts ) ? $atts : array();
     $atts['format'] = 'month';
     return seowk_date_shortcode( $atts );
 }
 add_shortcode( 'monat', 'seowk_monat_shortcode' );
 
+
 /* ------------------------------------------------------------------------- *
- * ADMIN: SHORTCODE GENERATOR (in Beiträgen/Seiten)
+ * GUTENBERG BLOCK - Dynamisches Datum
  * ------------------------------------------------------------------------- */
 
 /**
- * Fügt einen Shortcode-Generator Button im Editor hinzu
+ * Registriert den Gutenberg Block
+ */
+function seowk_register_date_block() {
+    // Prüfe ob Gutenberg verfügbar ist
+    if ( ! function_exists( 'register_block_type' ) ) {
+        return;
+    }
+
+    // Block registrieren
+    register_block_type( 'seowk/date', array(
+        'api_version'     => 2,
+        'editor_script'   => 'seowk-date-block-editor',
+        'editor_style'    => 'seowk-date-block-editor-style',
+        'render_callback' => 'seowk_render_date_block',
+        'attributes'      => array(
+            'format' => array(
+                'type'    => 'string',
+                'default' => 'numeric',
+            ),
+            'timezone' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+            'prefix' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+            'suffix' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+            'wrapper' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+            'cssClass' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+            'align' => array(
+                'type'    => 'string',
+                'default' => '',
+            ),
+        ),
+    ) );
+
+    // Editor Script registrieren
+    wp_register_script(
+        'seowk-date-block-editor',
+        false, // Inline Script
+        array( 'wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-i18n', 'wp-block-editor' ),
+        SEOWK_VERSION
+    );
+
+    // Editor Style registrieren
+    wp_register_style(
+        'seowk-date-block-editor-style',
+        false,
+        array(),
+        SEOWK_VERSION
+    );
+
+    // Inline Script für den Block
+    wp_add_inline_script( 'seowk-date-block-editor', seowk_get_date_block_script() );
+    
+    // Inline Style für den Block
+    wp_add_inline_style( 'seowk-date-block-editor-style', seowk_get_date_block_style() );
+}
+add_action( 'init', 'seowk_register_date_block' );
+
+/**
+ * Render Callback für den Block (Server-Side Rendering)
+ */
+function seowk_render_date_block( $attributes ) {
+    $atts = array(
+        'format'   => isset( $attributes['format'] ) ? $attributes['format'] : 'numeric',
+        'timezone' => isset( $attributes['timezone'] ) ? $attributes['timezone'] : '',
+        'prefix'   => isset( $attributes['prefix'] ) ? $attributes['prefix'] : '',
+        'suffix'   => isset( $attributes['suffix'] ) ? $attributes['suffix'] : '',
+        'wrapper'  => isset( $attributes['wrapper'] ) ? $attributes['wrapper'] : '',
+        'class'    => isset( $attributes['cssClass'] ) ? $attributes['cssClass'] : '',
+        'lang'     => 'de',
+    );
+
+    $output = seowk_generate_date_output( $atts );
+    
+    // Alignment-Wrapper hinzufügen
+    $align_class = '';
+    if ( ! empty( $attributes['align'] ) ) {
+        $align_class = ' has-text-align-' . esc_attr( $attributes['align'] );
+    }
+
+    return '<p class="seowk-date-block' . $align_class . '">' . $output . '</p>';
+}
+
+/**
+ * JavaScript für den Gutenberg Block
+ */
+function seowk_get_date_block_script() {
+    // Aktuelle Vorschau-Daten generieren
+    $months = seowk_get_german_months();
+    $weekdays = seowk_get_german_weekdays();
+    $current_month = $months[ (int) date( 'n' ) ];
+    $current_weekday = $weekdays[ date( 'l' ) ];
+    
+    $preview_data = array(
+        'numeric'       => date( 'd.m.Y' ),
+        'numeric_short' => date( 'j.n.Y' ),
+        'full'          => date( 'j' ) . '. ' . $current_month . ' ' . date( 'Y' ),
+        'full_day'      => $current_weekday . ', ' . date( 'j' ) . '. ' . $current_month . ' ' . date( 'Y' ),
+        'month_year'    => $current_month . ' ' . date( 'Y' ),
+        'year'          => date( 'Y' ),
+        'month'         => $current_month,
+        'day'           => $current_weekday,
+        'iso'           => date( 'Y-m-d' ),
+        'us'            => date( 'm/d/Y' ),
+        'time'          => date( 'H:i' ),
+        'datetime'      => date( 'd.m.Y H:i' ),
+        'datetime_full' => date( 'j' ) . '. ' . $current_month . ' ' . date( 'Y' ) . ', ' . date( 'H:i' ),
+    );
+
+    $preview_json = json_encode( $preview_data );
+
+    return <<<JS
+(function(wp) {
+    const { registerBlockType } = wp.blocks;
+    const { createElement: el, Fragment } = wp.element;
+    const { InspectorControls, BlockControls, AlignmentToolbar } = wp.blockEditor;
+    const { PanelBody, SelectControl, TextControl, ToggleControl } = wp.components;
+    const { useBlockProps } = wp.blockEditor;
+
+    const previewData = {$preview_json};
+
+    const formatOptions = [
+        { label: '01.02.2026 (numerisch)', value: 'numeric' },
+        { label: '1.2.2026 (numerisch kurz)', value: 'numeric_short' },
+        { label: '1. Februar 2026 (ausgeschrieben)', value: 'full' },
+        { label: 'Montag, 1. Februar 2026 (mit Wochentag)', value: 'full_day' },
+        { label: 'Februar 2026 (Monat + Jahr)', value: 'month_year' },
+        { label: '2026 (nur Jahr)', value: 'year' },
+        { label: 'Februar (nur Monat)', value: 'month' },
+        { label: 'Montag (nur Wochentag)', value: 'day' },
+        { label: '2026-02-01 (ISO Format)', value: 'iso' },
+        { label: '02/01/2026 (US Format)', value: 'us' },
+        { label: '14:30 (nur Uhrzeit)', value: 'time' },
+        { label: '01.02.2026 14:30 (Datum + Zeit)', value: 'datetime' },
+        { label: '1. Februar 2026, 14:30 (ausführlich)', value: 'datetime_full' },
+    ];
+
+    const timezoneOptions = [
+        { label: 'WordPress Standard', value: '' },
+        { label: 'Wien (Europe/Vienna)', value: 'Europe/Vienna' },
+        { label: 'Berlin (Europe/Berlin)', value: 'Europe/Berlin' },
+        { label: 'Zürich (Europe/Zurich)', value: 'Europe/Zurich' },
+        { label: 'London (Europe/London)', value: 'Europe/London' },
+        { label: 'Paris (Europe/Paris)', value: 'Europe/Paris' },
+        { label: 'Rom (Europe/Rome)', value: 'Europe/Rome' },
+        { label: 'Madrid (Europe/Madrid)', value: 'Europe/Madrid' },
+        { label: 'Amsterdam (Europe/Amsterdam)', value: 'Europe/Amsterdam' },
+        { label: 'New York (America/New_York)', value: 'America/New_York' },
+        { label: 'Los Angeles (America/Los_Angeles)', value: 'America/Los_Angeles' },
+        { label: 'Chicago (America/Chicago)', value: 'America/Chicago' },
+        { label: 'Tokio (Asia/Tokyo)', value: 'Asia/Tokyo' },
+        { label: 'Shanghai (Asia/Shanghai)', value: 'Asia/Shanghai' },
+        { label: 'Dubai (Asia/Dubai)', value: 'Asia/Dubai' },
+        { label: 'Sydney (Australia/Sydney)', value: 'Australia/Sydney' },
+        { label: 'UTC', value: 'UTC' },
+    ];
+
+    const wrapperOptions = [
+        { label: 'Kein Wrapper', value: '' },
+        { label: '<time> (semantisch)', value: 'time' },
+        { label: '<span>', value: 'span' },
+        { label: '<strong> (fett)', value: 'strong' },
+        { label: '<em> (kursiv)', value: 'em' },
+    ];
+
+    registerBlockType('seowk/date', {
+        title: 'Dynamisches Datum',
+        description: 'Fügt das aktuelle Datum mit verschiedenen Formatierungsoptionen ein.',
+        icon: 'calendar-alt',
+        category: 'widgets',
+        keywords: ['datum', 'date', 'zeit', 'time', 'jahr', 'year', 'monat', 'month'],
+        supports: {
+            html: false,
+            align: ['left', 'center', 'right'],
+        },
+        attributes: {
+            format: { type: 'string', default: 'numeric' },
+            timezone: { type: 'string', default: '' },
+            prefix: { type: 'string', default: '' },
+            suffix: { type: 'string', default: '' },
+            wrapper: { type: 'string', default: '' },
+            cssClass: { type: 'string', default: '' },
+            align: { type: 'string', default: '' },
+        },
+
+        edit: function(props) {
+            const { attributes, setAttributes } = props;
+            const { format, timezone, prefix, suffix, wrapper, cssClass, align } = attributes;
+            const blockProps = useBlockProps();
+
+            // Vorschau generieren
+            let preview = previewData[format] || previewData.numeric;
+            if (timezone) {
+                preview += ' *';
+            }
+            const fullPreview = (prefix || '') + preview + (suffix || '');
+
+            // Wrapper für Vorschau
+            let previewElement;
+            switch(wrapper) {
+                case 'strong':
+                    previewElement = el('strong', {}, fullPreview);
+                    break;
+                case 'em':
+                    previewElement = el('em', {}, fullPreview);
+                    break;
+                case 'time':
+                case 'span':
+                default:
+                    previewElement = fullPreview;
+            }
+
+            return el(Fragment, {},
+                // Block Controls (Alignment)
+                el(BlockControls, {},
+                    el(AlignmentToolbar, {
+                        value: align,
+                        onChange: (newAlign) => setAttributes({ align: newAlign }),
+                    })
+                ),
+
+                // Inspector Controls (Sidebar)
+                el(InspectorControls, {},
+                    el(PanelBody, { title: 'Datum-Format', initialOpen: true },
+                        el(SelectControl, {
+                            label: 'Format',
+                            value: format,
+                            options: formatOptions,
+                            onChange: (value) => setAttributes({ format: value }),
+                        }),
+                        el(SelectControl, {
+                            label: 'Zeitzone',
+                            value: timezone,
+                            options: timezoneOptions,
+                            onChange: (value) => setAttributes({ timezone: value }),
+                            help: timezone ? '* Zeitzone kann die angezeigte Zeit beeinflussen' : '',
+                        })
+                    ),
+                    el(PanelBody, { title: 'Text-Optionen', initialOpen: false },
+                        el(TextControl, {
+                            label: 'Prefix',
+                            value: prefix,
+                            onChange: (value) => setAttributes({ prefix: value }),
+                            placeholder: 'z.B. Stand: ',
+                            help: 'Text vor dem Datum',
+                        }),
+                        el(TextControl, {
+                            label: 'Suffix',
+                            value: suffix,
+                            onChange: (value) => setAttributes({ suffix: value }),
+                            placeholder: 'z.B.  Uhr',
+                            help: 'Text nach dem Datum',
+                        })
+                    ),
+                    el(PanelBody, { title: 'HTML-Optionen', initialOpen: false },
+                        el(SelectControl, {
+                            label: 'HTML-Wrapper',
+                            value: wrapper,
+                            options: wrapperOptions,
+                            onChange: (value) => setAttributes({ wrapper: value }),
+                            help: '<time> ist semantisch optimal für Datumsangaben',
+                        }),
+                        el(TextControl, {
+                            label: 'CSS-Klasse',
+                            value: cssClass,
+                            onChange: (value) => setAttributes({ cssClass: value }),
+                            placeholder: 'z.B. my-date-class',
+                        })
+                    )
+                ),
+
+                // Block Preview
+                el('div', Object.assign({}, blockProps, {
+                    className: 'seowk-date-block-preview' + (align ? ' has-text-align-' + align : ''),
+                }),
+                    el('div', { className: 'seowk-date-icon' }, el('span', { className: 'dashicons dashicons-calendar-alt' })),
+                    el('div', { className: 'seowk-date-content' },
+                        el('div', { className: 'seowk-date-label' }, 'Dynamisches Datum'),
+                        el('div', { className: 'seowk-date-preview' }, previewElement)
+                    )
+                )
+            );
+        },
+
+        save: function() {
+            // Server-Side Rendering - nothing saved in frontend
+            return null;
+        },
+    });
+})(window.wp);
+JS;
+}
+
+/**
+ * CSS für den Gutenberg Block Editor
+ */
+function seowk_get_date_block_style() {
+    return <<<CSS
+.seowk-date-block-preview {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #f0f6fc 0%, #e8f4f8 100%);
+    border: 1px solid #c3c4c7;
+    border-left: 4px solid #2271b1;
+    border-radius: 4px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+.seowk-date-block-preview.has-text-align-center {
+    justify-content: center;
+}
+
+.seowk-date-block-preview.has-text-align-right {
+    justify-content: flex-end;
+}
+
+.seowk-date-icon {
+    font-size: 28px;
+    line-height: 1;
+    color: #2271b1;
+}
+
+.seowk-date-icon .dashicons {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+}
+
+.seowk-date-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.seowk-date-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #1e1e1e;
+    opacity: 0.6;
+}
+
+.seowk-date-preview {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e1e1e;
+}
+
+.seowk-date-preview strong {
+    font-weight: 700;
+}
+
+.seowk-date-preview em {
+    font-style: italic;
+}
+
+/* Frontend Styles */
+.seowk-date-block {
+    margin: 0;
+}
+CSS;
+}
+
+
+/* ------------------------------------------------------------------------- *
+ * CLASSIC EDITOR SUPPORT (Button + Modal)
+ * ------------------------------------------------------------------------- */
+
+/**
+ * Fügt einen Shortcode-Generator Button im Classic Editor hinzu
  */
 function seowk_date_add_editor_button() {
     if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'edit_pages' ) ) {
@@ -240,13 +635,12 @@ function seowk_date_add_editor_button() {
         return;
     }
     
-    // Button für Classic Editor
     add_action( 'media_buttons', 'seowk_date_media_button' );
 }
 add_action( 'admin_init', 'seowk_date_add_editor_button' );
 
 /**
- * Media Button für Shortcode-Einfügung
+ * Media Button für Shortcode-Einfügung (Classic Editor)
  */
 function seowk_date_media_button() {
     $screen = get_current_screen();
@@ -261,7 +655,7 @@ function seowk_date_media_button() {
 }
 
 /**
- * Admin Scripts und Modal für Shortcode-Generator
+ * Admin Scripts und Modal für Shortcode-Generator (Classic Editor)
  */
 function seowk_date_admin_scripts( $hook ) {
     if ( ! in_array( $hook, array( 'post.php', 'post-new.php' ) ) ) {
@@ -270,6 +664,11 @@ function seowk_date_admin_scripts( $hook ) {
     
     $presets = seowk_get_date_presets();
     $timezones = seowk_get_timezone_options();
+    
+    $months = seowk_get_german_months();
+    $weekdays = seowk_get_german_weekdays();
+    $current_month = $months[ (int) date( 'n' ) ];
+    $current_weekday = $weekdays[ date( 'l' ) ];
     
     ?>
     <style>
@@ -425,12 +824,12 @@ function seowk_date_admin_scripts( $hook ) {
         var previewData = <?php echo json_encode( array(
             'numeric'       => date( 'd.m.Y' ),
             'numeric_short' => date( 'j.n.Y' ),
-            'full'          => date( 'j' ) . '. ' . seowk_get_german_months()[ (int) date( 'n' ) ] . ' ' . date( 'Y' ),
-            'full_day'      => seowk_get_german_weekdays()[ date( 'l' ) ] . ', ' . date( 'j' ) . '. ' . seowk_get_german_months()[ (int) date( 'n' ) ] . ' ' . date( 'Y' ),
-            'month_year'    => seowk_get_german_months()[ (int) date( 'n' ) ] . ' ' . date( 'Y' ),
+            'full'          => date( 'j' ) . '. ' . $current_month . ' ' . date( 'Y' ),
+            'full_day'      => $current_weekday . ', ' . date( 'j' ) . '. ' . $current_month . ' ' . date( 'Y' ),
+            'month_year'    => $current_month . ' ' . date( 'Y' ),
             'year'          => date( 'Y' ),
-            'month'         => seowk_get_german_months()[ (int) date( 'n' ) ],
-            'day'           => seowk_get_german_weekdays()[ date( 'l' ) ],
+            'month'         => $current_month,
+            'day'           => $current_weekday,
             'iso'           => date( 'Y-m-d' ),
             'us'            => date( 'm/d/Y' ),
             'time'          => date( 'H:i' ),
@@ -503,20 +902,15 @@ function seowk_date_admin_scripts( $hook ) {
             $('#seowk-shortcode-output').text(shortcode);
         }
         
-        // Shortcode einfügen
+        // Shortcode einfügen (nur Classic Editor)
         $('#seowk-date-insert').on('click', function() {
             var shortcode = $('#seowk-shortcode-output').text();
             
-            // Gutenberg Editor
-            if (typeof wp !== 'undefined' && wp.data && wp.data.select('core/editor')) {
-                var block = wp.blocks.createBlock('core/shortcode', { text: shortcode });
-                wp.data.dispatch('core/block-editor').insertBlocks(block);
-            }
-            // Classic Editor
-            else if (typeof tinymce !== 'undefined' && tinymce.activeEditor) {
+            // Classic Editor (TinyMCE)
+            if (typeof tinymce !== 'undefined' && tinymce.activeEditor && !tinymce.activeEditor.isHidden()) {
                 tinymce.activeEditor.execCommand('mceInsertContent', false, shortcode);
             }
-            // Fallback: Textarea
+            // Text Editor
             else {
                 var textarea = document.getElementById('content');
                 if (textarea) {
@@ -532,6 +926,7 @@ function seowk_date_admin_scripts( $hook ) {
     <?php
 }
 add_action( 'admin_footer', 'seowk_date_admin_scripts' );
+
 
 /* ------------------------------------------------------------------------- *
  * DOKUMENTATION IM ADMIN-BEREICH
@@ -551,8 +946,11 @@ function seowk_date_add_help_tab() {
         'id'      => 'seowk_date_help',
         'title'   => '📅 Datum Shortcode',
         'content' => '
-            <h3>Datum Shortcode (SEO Wunderkiste)</h3>
+            <h3>Datum Shortcode & Block (SEO Wunderkiste)</h3>
             <p>Füge das aktuelle Datum dynamisch in deine Inhalte ein.</p>
+            
+            <h4>Gutenberg Block:</h4>
+            <p>Suche nach "Dynamisches Datum" oder "Datum" in der Block-Bibliothek. Der Block bietet eine visuelle Oberfläche mit Live-Vorschau.</p>
             
             <h4>Basis-Shortcodes:</h4>
             <ul>
