@@ -1,8 +1,8 @@
-=== SEO Wunderkiste v2.6 ===
+=== SEO Wunderkiste v2.7 ===
 Die modulare Lösung für besseres WordPress SEO, Performance, Sicherheit und Verwaltung.
 
 --- BESCHREIBUNG ---
-Dieses Plugin vereint 16 leistungsstarke Funktionen in einem einzigen Tool. 
+Dieses Plugin vereint 17 leistungsstarke Funktionen in einem einzigen Tool. 
 Um die Performance deiner Seite zu schonen, sind standardmäßig alle Module deaktiviert. 
 Du kannst unter "Einstellungen > SEO Wunderkiste" genau die Funktionen aktivieren, die du benötigst.
 
@@ -80,7 +80,7 @@ Du kannst unter "Einstellungen > SEO Wunderkiste" genau die Funktionen aktiviere
     Zeigt die Post/Page/Media ID in allen Übersichten an (klickbar zum Kopieren).
     Features: Funktioniert für alle Post-Types, sortierbar, One-Click-Copy
 
-=== CONTENT TOOLS (1 Modul) === ⭐ NEU
+=== CONTENT TOOLS (2 Module) ===
 
 16. Date Shortcode
     Fügt das aktuelle Datum via Shortcode in Beiträge und Seiten ein.
@@ -88,9 +88,29 @@ Du kannst unter "Einstellungen > SEO Wunderkiste" genau die Funktionen aktiviere
     - Flexible Formate: 01.02.2026, 1. Februar 2026, nur Jahr, nur Monat, etc.
     - Zeitzonenunterstützung: Wien, New York, Tokyo, UTC und mehr
     - Deutsche Übersetzung: Monatsnamen und Wochentage auf Deutsch
-    - Editor-Button: Visueller Shortcode-Generator im Editor
+    - Gutenberg Block: "Dynamisches Datum" mit visueller Oberfläche
+    - Editor-Button: Visueller Shortcode-Generator im Classic Editor
     - Kurzformen: [datum], [jahr], [monat] für schnelle Nutzung
     - Wrapper-Optionen: Optional in <time>, <span> etc. einpacken
+
+17. Semantic Blocks ⭐ NEU
+    HTML5 Wrapper-Blöcke für bessere Seitenstruktur und SEO.
+    Verfügbare Blöcke:
+    - <article> – Eigenständige Inhalte (Blogpost, News)
+    - <section> – Thematische Abschnitte
+    - <aside> – Ergänzende Informationen, Sidebar-Inhalte
+    - <header> – Einleitender Bereich eines Abschnitts
+    - <footer> – Abschließender Bereich eines Abschnitts
+    - <main> – Hauptinhalt der Seite (nur 1x pro Seite)
+    - <figure> + <figcaption> – Abbildungen mit Beschriftung
+    - <details> + <summary> – Nativer Akkordeon (ohne JavaScript!)
+    - <mark> – Hervorgehobener/relevanter Text
+    - <address> – Kontaktinformationen
+    Features:
+    - Farbcodierte Labels im Editor
+    - InnerBlocks: Beliebige Blöcke verschachteln
+    - HTML-Attribute: CSS-Klasse, ID, ARIA-Label, Role
+    - Verbessert Zugänglichkeit und Maschinenlesbarkeit
 
 --- INSTALLATION & AKTIVIERUNG ---
 
@@ -150,10 +170,10 @@ Aktiviere das Modul in den Einstellungen - es arbeitet dann vollautomatisch:
 - Kommentar-Menüs verschwinden aus dem Backend
 - Optional: Nutze die Bulk-Aktion "Kommentare schließen" für bestehende Inhalte
 
-> Wie nutze ich den Date Shortcode? ⭐ NEU
+> Wie nutze ich den Date Shortcode?
 1. Aktiviere das Modul in den Einstellungen
-2. Im Editor erscheint ein "Datum" Button neben "Medien hinzufügen"
-3. Klicke darauf und wähle dein gewünschtes Format
+2. GUTENBERG: Suche nach "Dynamisches Datum" in der Block-Bibliothek
+3. CLASSIC EDITOR: Nutze den "Datum" Button neben "Medien hinzufügen"
 4. Oder nutze die Shortcodes direkt:
 
    Basis-Shortcodes:
@@ -206,11 +226,85 @@ Aktiviere das Modul in den Einstellungen - es arbeitet dann vollautomatisch:
    - Artikel-Datum: Stand: [seowk_date format="full"]
    - Zeitzone anzeigen: Aktuelle Zeit in Wien: [seowk_date format="time" timezone="Europe/Vienna" suffix=" Uhr"]
 
+> Wie nutze ich die Semantic Blocks? 
+1. Aktiviere das Modul in den Einstellungen
+2. Im Gutenberg-Editor auf "+" klicken
+3. Suche nach "Article", "Section", "Aside", "Details" etc.
+4. Oder suche nach "Semantic" um alle Blöcke zu sehen
+5. Blöcke findest du in der Kategorie "Design"
+
+   Verfügbare Blöcke:
+   
+   ARTICLE – Eigenständiger Inhalt
+   → Für Blogposts, News-Artikel, Kommentare, Forenbeiträge
+   → Inhalte, die auch außerhalb des Kontexts Sinn ergeben
+   
+   SECTION – Thematischer Abschnitt
+   → Für Kapitel, Tabs, thematische Gruppierungen
+   → Sollte idealerweise eine Überschrift enthalten
+   
+   ASIDE – Ergänzende Information
+   → Für Sidebars, Zusatzinfos, verwandte Links
+   → Inhalt der den Hauptinhalt ergänzt, aber nicht essentiell ist
+   
+   HEADER – Einleitender Bereich
+   → Für Kopfbereiche von Artikeln oder Sektionen
+   → Typisch: Überschrift, Intro, Metadaten
+   
+   FOOTER – Abschließender Bereich
+   → Für Fußbereiche von Artikeln oder Sektionen
+   → Typisch: Autor, Datum, Tags, Copyright
+   
+   MAIN – Hauptinhalt
+   → Nur EINMAL pro Seite verwenden!
+   → Umschließt den zentralen Inhalt der Seite
+   
+   FIGURE – Abbildung mit Beschriftung
+   → Für Bilder, Diagramme, Code-Beispiele
+   → Mit optionaler <figcaption> für Bildunterschriften
+   
+   DETAILS – Aufklappbarer Bereich (Akkordeon)
+   → Nativer HTML5 Akkordeon OHNE JavaScript!
+   → Perfekt für FAQs, zusätzliche Infos, Spoiler
+   → Einstellbar: Summary-Text, standardmäßig offen/geschlossen
+   
+   MARK – Hervorgehobener Text
+   → Für relevante, wichtige Textstellen
+   → Semantisch: "Diese Stelle ist im aktuellen Kontext relevant"
+   
+   ADDRESS – Kontaktinformationen
+   → Für Autor-Kontakt, Firmenadresse
+   → Nicht nur für physische Adressen!
+
+   Alle Blöcke unterstützen:
+   - CSS-Klasse und ID
+   - ARIA-Label für Barrierefreiheit
+   - Role-Attribut für spezielle Funktionen
+   - Verschachtelung beliebiger anderer Blöcke
+
+   Warum semantisches HTML wichtig ist:
+   - Bessere SEO: Suchmaschinen verstehen die Struktur
+   - Barrierefreiheit: Screenreader können navigieren
+   - Zukunftssicher: AI/LLMs verstehen den Inhalt besser
+   - Wartbarkeit: Klare Struktur im Code
+
 > Wie funktionieren Cleaner, Image SEO und Redirects?
 Diese Module arbeiten vollautomatisch im Hintergrund, sobald sie in den Einstellungen aktiviert wurden. 
 Es ist kein weiteres Zutun nötig.
 
 --- CHANGELOG ---
+
+v2.7 
+- NEU: Semantic Blocks Modul für HTML5 Wrapper-Elemente
+  - 10 neue Gutenberg-Blöcke: article, section, aside, header, footer, main, figure, details, mark, address
+  - Farbcodierte Labels im Editor
+  - InnerBlocks-Unterstützung
+  - HTML-Attribute: CSS-Klasse, ID, ARIA-Label, Role
+  - Nativer Akkordeon ohne JavaScript (<details>/<summary>)
+  - Figure mit Bildunterschrift (<figcaption>)
+- Verbessert: Date Shortcode hat jetzt einen Gutenberg-Block
+- Verbessert: Modul-Anzahl jetzt 17 Module
+- Aktualisiert: Version auf 2.7
 
 v2.6
 - NEU: Date Shortcode Modul für dynamische Datumsanzeige
@@ -290,7 +384,25 @@ includes/
 ├── module-login-protection.php   # Login Türsteher
 ├── module-comment-blocker.php    # Comment Blocker
 ├── module-id-column.php          # ID Display
-└── module-date-shortcode.php     # Date Shortcode ⭐ NEU
+├── module-date-shortcode.php     # Date Shortcode
+└── module-semantic-blocks.php    # Semantic Blocks 
+
+--- SEMANTISCHE HTML5 ELEMENTE ÜBERSICHT ---
+
+| Element   | Verwendung                                      |
+|-----------|------------------------------------------------|
+| <article> | Eigenständiger Inhalt (Blog, News, Kommentar)  |
+| <section> | Thematischer Abschnitt mit Überschrift         |
+| <aside>   | Ergänzende Info, Sidebar, verwandte Inhalte    |
+| <header>  | Einleitender Bereich (Titel, Intro, Meta)      |
+| <footer>  | Abschließender Bereich (Autor, Datum, Links)   |
+| <main>    | Hauptinhalt der Seite (nur 1x verwenden!)      |
+| <figure>  | Abbildung, Diagramm, Code-Beispiel             |
+| <figcaption> | Beschriftung für <figure>                   |
+| <details> | Aufklappbarer Bereich                          |
+| <summary> | Überschrift für <details>                      |
+| <mark>    | Hervorgehobene/relevante Textstelle            |
+| <address> | Kontaktinformationen                           |
 
 --- META TAGS BEISPIEL (SEO Meta Settings Output) ---
 
