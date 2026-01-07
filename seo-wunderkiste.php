@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: SEO Wunderkiste
- * Plugin URI: https://example.com/seo-wunderkiste
+ * Plugin URI: https://designare.at/seo-wunderkiste
  * Description: Deine modulare All-in-One Lösung: SEO Schema, Meta Settings, Bild-Optimierung, Cleaner, Security, Tracking & mehr.
- * Version: 2.5
+ * Version: 2.6
  * Author: Michael Kanda
- * Author URI: https://example.com
+ * Author URI: https://designare.at
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: seo-wunderkiste
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * PLUGIN CONSTANTS
  * ------------------------------------------------------------------------- */
 
-define( 'SEOWK_VERSION', '2.5' );
+define( 'SEOWK_VERSION', '2.6' );
 define( 'SEOWK_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SEOWK_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'SEOWK_PLUGIN_FILE', __FILE__ );
@@ -107,6 +107,11 @@ if ( ! empty( $options['seowk_enable_comment_blocker'] ) ) {
 // ADMIN TOOLS MODULE
 if ( ! empty( $options['seowk_enable_id_column'] ) ) {
     require_once SEOWK_PLUGIN_DIR . 'includes/module-id-column.php';
+}
+
+// CONTENT TOOLS MODULE
+if ( ! empty( $options['seowk_enable_date_shortcode'] ) ) {
+    require_once SEOWK_PLUGIN_DIR . 'includes/module-date-shortcode.php';
 }
 
 /* ------------------------------------------------------------------------- *
@@ -276,6 +281,9 @@ function seowk_get_available_modules() {
             'seowk_enable_login_protection' => 'Login Türsteher',
             'seowk_enable_comment_blocker' => 'Comment Blocker',
             'seowk_enable_id_column' => 'ID Column Display',
+        ),
+        'content_tools' => array(
+            'seowk_enable_date_shortcode' => 'Date Shortcode',
         ),
     );
 }
