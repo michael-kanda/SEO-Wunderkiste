@@ -1,8 +1,8 @@
-=== SEO Wunderkiste v2.5 ===
+=== SEO Wunderkiste v2.6 ===
 Die modulare Lösung für besseres WordPress SEO, Performance, Sicherheit und Verwaltung.
 
 --- BESCHREIBUNG ---
-Dieses Plugin vereint 15 leistungsstarke Funktionen in einem einzigen Tool. 
+Dieses Plugin vereint 16 leistungsstarke Funktionen in einem einzigen Tool. 
 Um die Performance deiner Seite zu schonen, sind standardmäßig alle Module deaktiviert. 
 Du kannst unter "Einstellungen > SEO Wunderkiste" genau die Funktionen aktivieren, die du benötigst.
 
@@ -80,6 +80,18 @@ Du kannst unter "Einstellungen > SEO Wunderkiste" genau die Funktionen aktiviere
     Zeigt die Post/Page/Media ID in allen Übersichten an (klickbar zum Kopieren).
     Features: Funktioniert für alle Post-Types, sortierbar, One-Click-Copy
 
+=== CONTENT TOOLS (1 Modul) === ⭐ NEU
+
+16. Date Shortcode
+    Fügt das aktuelle Datum via Shortcode in Beiträge und Seiten ein.
+    Features:
+    - Flexible Formate: 01.02.2026, 1. Februar 2026, nur Jahr, nur Monat, etc.
+    - Zeitzonenunterstützung: Wien, New York, Tokyo, UTC und mehr
+    - Deutsche Übersetzung: Monatsnamen und Wochentage auf Deutsch
+    - Editor-Button: Visueller Shortcode-Generator im Editor
+    - Kurzformen: [datum], [jahr], [monat] für schnelle Nutzung
+    - Wrapper-Optionen: Optional in <time>, <span> etc. einpacken
+
 --- INSTALLATION & AKTIVIERUNG ---
 
 1.  Lade den Ordner 'seo-wunderkiste' in das Verzeichnis '/wp-content/plugins/' hoch 
@@ -90,21 +102,13 @@ Du kannst unter "Einstellungen > SEO Wunderkiste" genau die Funktionen aktiviere
 
 --- BENUTZUNG ---
 
-> Wie nutze ich die SEO Meta Settings? (NEU)
+> Wie nutze ich die SEO Meta Settings?
 1. Aktiviere das Modul in den Einstellungen
 2. Öffne eine beliebige Seite oder einen Beitrag
 3. Unterhalb des Editors findest du die Box "🔍 SEO Meta Einstellungen"
 4. Nutze die Tabs (Basis SEO, Open Graph, Twitter, Erweitert) um alle Meta-Tags einzustellen
 5. Die Google Vorschau zeigt dir live, wie dein Snippet aussehen wird
 6. Die Spalte "🔍 SEO" in der Übersicht zeigt den Optimierungsgrad an
-
-Ausgabe im Frontend:
-- <title> Tag wird automatisch überschrieben
-- Meta Description, Robots, Canonical
-- Open Graph Tags für Facebook, LinkedIn, WhatsApp
-- Twitter Card Tags
-- Author & Copyright Meta
-- Format-Detection für Telefonnummern
 
 > Wie nutze ich das Schema-Feld?
 Gehe in einen Beitrag oder eine Seite. Unter dem Editor findest du die Box "Strukturierte Daten". 
@@ -146,11 +150,80 @@ Aktiviere das Modul in den Einstellungen - es arbeitet dann vollautomatisch:
 - Kommentar-Menüs verschwinden aus dem Backend
 - Optional: Nutze die Bulk-Aktion "Kommentare schließen" für bestehende Inhalte
 
+> Wie nutze ich den Date Shortcode? ⭐ NEU
+1. Aktiviere das Modul in den Einstellungen
+2. Im Editor erscheint ein "Datum" Button neben "Medien hinzufügen"
+3. Klicke darauf und wähle dein gewünschtes Format
+4. Oder nutze die Shortcodes direkt:
+
+   Basis-Shortcodes:
+   [seowk_date]                              → 07.01.2026 (Standard)
+   [datum]                                   → Alias für seowk_date
+   [jahr]                                    → 2026
+   [monat]                                   → Januar
+
+   Format-Optionen (format="..."):
+   numeric        → 07.01.2026
+   numeric_short  → 7.1.2026
+   full           → 7. Januar 2026
+   full_day       → Dienstag, 7. Januar 2026
+   month_year     → Januar 2026
+   year           → 2026
+   month          → Januar
+   day            → Dienstag
+   iso            → 2026-01-07
+   us             → 01/07/2026
+   time           → 14:30
+   datetime       → 07.01.2026 14:30
+
+   Zeitzonen (timezone="..."):
+   Europe/Vienna       → Wien
+   Europe/Berlin       → Berlin
+   Europe/Zurich       → Zürich
+   America/New_York    → New York
+   America/Los_Angeles → Los Angeles
+   Asia/Tokyo          → Tokyo
+   UTC                 → UTC
+
+   Zusätzliche Attribute:
+   prefix="..."   → Text vor dem Datum
+   suffix="..."   → Text nach dem Datum
+   wrapper="time" → In HTML-Tag einpacken (span, time, div, etc.)
+   class="..."    → CSS-Klasse hinzufügen
+   lang="de"      → Sprache (de/en), Standard: de
+
+   Beispiele:
+   [seowk_date format="full"]                         → 7. Januar 2026
+   [seowk_date format="year" prefix="© "]             → © 2026
+   [seowk_date format="month_year"]                   → Januar 2026
+   [seowk_date format="full_day" timezone="America/New_York"] → Montag, 6. Januar 2026 (NY Zeit)
+   [seowk_date format="datetime" timezone="Europe/Vienna"]    → 07.01.2026 20:30 (Wiener Zeit)
+   [seowk_date format="year" wrapper="time" class="copyright-year"] → <time class="copyright-year">2026</time>
+   [seowk_date format="d.m.Y H:i:s"]                  → 07.01.2026 14:30:45 (eigenes PHP-Format)
+
+   Typische Anwendungen:
+   - Footer Copyright: © [jahr] Meine Firma
+   - Artikel-Datum: Stand: [seowk_date format="full"]
+   - Zeitzone anzeigen: Aktuelle Zeit in Wien: [seowk_date format="time" timezone="Europe/Vienna" suffix=" Uhr"]
+
 > Wie funktionieren Cleaner, Image SEO und Redirects?
 Diese Module arbeiten vollautomatisch im Hintergrund, sobald sie in den Einstellungen aktiviert wurden. 
 Es ist kein weiteres Zutun nötig.
 
 --- CHANGELOG ---
+
+v2.6
+- NEU: Date Shortcode Modul für dynamische Datumsanzeige
+  - 12 vordefinierte Formate (numerisch, ausgeschrieben, ISO, US, etc.)
+  - Zeitzonenunterstützung (Wien, Berlin, New York, Tokyo, etc.)
+  - Deutsche Übersetzung für Monate und Wochentage
+  - Kurzformen [datum], [jahr], [monat]
+  - Visueller Shortcode-Generator im Editor
+  - Prefix/Suffix und Wrapper-Optionen
+  - Eigene PHP-Datumsformate möglich
+- Verbessert: Modul-Anzahl jetzt 16 Module
+- Aktualisiert: Version auf 2.6
+- NEU: Content Tools Kategorie
 
 v2.5 
 - NEU: SEO Meta Settings Modul mit vollständigen Meta-Tags
@@ -201,22 +274,23 @@ v2.0 (Initial Release)
 --- MODUL-STRUKTUR ---
 
 includes/
-├── admin-settings.php           # Admin-Einstellungsseite
-├── module-meta-settings.php    # SEO Meta Settings ⭐ NEU
-├── module-schema.php           # SEO Schema
-├── module-bulk-noindex.php     # NoIndex Manager
-├── module-seo-redirects.php    # Zombie Killer
+├── admin-settings.php            # Admin-Einstellungsseite
+├── module-meta-settings.php      # SEO Meta Settings
+├── module-schema.php             # SEO Schema
+├── module-bulk-noindex.php       # NoIndex Manager
+├── module-seo-redirects.php      # Zombie Killer
 ├── module-conversion-tracker.php # Conversion Tracking
-├── module-resizer.php          # Image Resizer
-├── module-cleaner.php          # Upload Cleaner
-├── module-image-seo.php        # Image SEO
-├── module-media-columns.php    # Media Inspector
-├── module-svg.php              # SVG Support
-├── module-disable-emojis.php   # Emoji Remover
-├── module-disable-xmlrpc.php   # XML-RPC Blocker
-├── module-login-protection.php # Login Türsteher
-├── module-comment-blocker.php  # Comment Blocker
-└── module-id-column.php        # ID Display
+├── module-resizer.php            # Image Resizer
+├── module-cleaner.php            # Upload Cleaner
+├── module-image-seo.php          # Image SEO
+├── module-media-columns.php      # Media Inspector
+├── module-svg.php                # SVG Support
+├── module-disable-emojis.php     # Emoji Remover
+├── module-disable-xmlrpc.php     # XML-RPC Blocker
+├── module-login-protection.php   # Login Türsteher
+├── module-comment-blocker.php    # Comment Blocker
+├── module-id-column.php          # ID Display
+└── module-date-shortcode.php     # Date Shortcode ⭐ NEU
 
 --- META TAGS BEISPIEL (SEO Meta Settings Output) ---
 
