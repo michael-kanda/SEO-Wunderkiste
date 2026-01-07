@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: SEO Wunderkiste
- * Plugin URI: https://designare.at/seo-wunderkiste
+ * Plugin URI: https://example.com/seo-wunderkiste
  * Description: Deine modulare All-in-One Lösung: SEO Schema, Meta Settings, Bild-Optimierung, Cleaner, Security, Tracking & mehr.
- * Version: 2.6
+ * Version: 2.7
  * Author: Michael Kanda
- * Author URI: https://designare.at
+ * Author URI: https://example.com
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: seo-wunderkiste
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * PLUGIN CONSTANTS
  * ------------------------------------------------------------------------- */
 
-define( 'SEOWK_VERSION', '2.6' );
+define( 'SEOWK_VERSION', '2.7' );
 define( 'SEOWK_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SEOWK_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'SEOWK_PLUGIN_FILE', __FILE__ );
@@ -112,6 +112,10 @@ if ( ! empty( $options['seowk_enable_id_column'] ) ) {
 // CONTENT TOOLS MODULE
 if ( ! empty( $options['seowk_enable_date_shortcode'] ) ) {
     require_once SEOWK_PLUGIN_DIR . 'includes/module-date-shortcode.php';
+}
+
+if ( ! empty( $options['seowk_enable_semantic_blocks'] ) ) {
+    require_once SEOWK_PLUGIN_DIR . 'includes/module-semantic-blocks.php';
 }
 
 /* ------------------------------------------------------------------------- *
@@ -284,6 +288,7 @@ function seowk_get_available_modules() {
         ),
         'content_tools' => array(
             'seowk_enable_date_shortcode' => 'Date Shortcode',
+            'seowk_enable_semantic_blocks' => 'Semantic Blocks',
         ),
     );
 }
