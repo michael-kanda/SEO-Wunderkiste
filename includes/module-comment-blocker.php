@@ -61,8 +61,8 @@ add_filter( 'pings_open', 'seowk_disable_existing_comments', 20, 2 );
 function seowk_disable_comments_feed() {
     if ( is_comment_feed() ) {
         wp_die( 
-            'Kommentare sind auf dieser Website deaktiviert.', 
-            'Kommentare deaktiviert', 
+            esc_html__( 'Kommentare sind auf dieser Website deaktiviert.', 'seo-wunderkiste' ), 
+            esc_html__( 'Kommentare deaktiviert', 'seo-wunderkiste' ), 
             array( 'response' => 403 ) 
         );
     }
@@ -85,23 +85,14 @@ add_action( 'widgets_init', 'seowk_disable_comments_widget' );
 // 10. CSS: Kommentar-bezogene Elemente im Admin ausblenden
 function seowk_hide_comments_admin_css() {
     echo '<style>
-        /* Kommentar-Spalte in Übersichten ausblenden */
         .column-comments { display: none !important; }
-        
-        /* Discussion Settings ausblenden */
-        #wpbody-content .wrap h1:contains("Diskussion"),
-        .form-table tr:has(#default_pingback_flag),
-        .form-table tr:has(#default_ping_status),
-        .form-table tr:has(#default_comment_status) {
-            display: none !important;
-        }
     </style>';
 }
 add_action( 'admin_head', 'seowk_hide_comments_admin_css' );
 
 // 11. Bulk-Aktion: Alle Kommentare schließen
 function seowk_add_bulk_close_comments_action( $bulk_actions ) {
-    $bulk_actions['seowk_close_comments'] = 'Kommentare schließen';
+    $bulk_actions['seowk_close_comments'] = __( 'Kommentare schließen', 'seo-wunderkiste' );
     return $bulk_actions;
 }
 add_filter( 'bulk_actions-edit-post', 'seowk_add_bulk_close_comments_action' );
@@ -126,11 +117,14 @@ add_filter( 'handle_bulk_actions-edit-page', 'seowk_handle_bulk_close_comments',
 
 // 12. Erfolgs-Nachricht für Bulk-Aktion
 function seowk_bulk_close_comments_notice() {
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nur Anzeige einer Erfolgsmeldung
     if ( ! empty( $_REQUEST['seowk_comments_closed'] ) ) {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $count = intval( $_REQUEST['seowk_comments_closed'] );
         printf( 
-            '<div class="notice notice-success is-dismissible"><p>Kommentare wurden für %d Einträge geschlossen.</p></div>', 
-            $count 
+            '<div class="notice notice-success is-dismissible"><p>%s</p></div>', 
+            /* translators: %d: number of entries */
+            sprintf( esc_html__( 'Kommentare wurden für %d Einträge geschlossen.', 'seo-wunderkiste' ), $count )
         );
     }
 }
@@ -138,21 +132,11 @@ add_action( 'admin_notices', 'seowk_bulk_close_comments_notice' );
 
 // 13. OPTIONAL: Alle bestehenden Kommentare in der DB schließen (einmalig)
 // Diese Funktion wird NICHT automatisch ausgeführt!
-// Du kannst sie manuell in functions.php aufrufen oder als WP-CLI Command nutzen
 function seowk_close_all_existing_comments() {
     global $wpdb;
     
-    // Alle Posts auf "closed" setzen
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Einmalige Admin-Funktion
     $wpdb->query( "UPDATE {$wpdb->posts} SET comment_status = 'closed', ping_status = 'closed' WHERE comment_status = 'open'" );
     
-    return 'Alle bestehenden Kommentare wurden geschlossen.';
+    return __( 'Alle bestehenden Kommentare wurden geschlossen.', 'seo-wunderkiste' );
 }
-
-// Um die Funktion zu nutzen, füge dies temporär in functions.php ein:
-// add_action( 'admin_init', function() {
-//     if ( current_user_can( 'manage_options' ) && isset( $_GET['close_all_comments'] ) ) {
-//         echo seowk_close_all_existing_comments();
-//         die();
-//     }
-// });
-// Dann rufe auf: deineseite.de/wp-admin/?close_all_comments

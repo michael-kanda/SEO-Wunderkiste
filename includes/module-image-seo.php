@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  * Automatische Generierung von Alt-Tags und Titeln aus dem Dateinamen.
  * ------------------------------------------------------------------------- */
 
-function cts_auto_image_attributes( $post_ID ) {
+function seowk_auto_image_attributes( $post_ID ) {
     
     // Prüfen, ob es wirklich ein Bild/Attachment ist
     if ( ! wp_attachment_is_image( $post_ID ) ) {
@@ -31,13 +31,10 @@ function cts_auto_image_attributes( $post_ID ) {
     wp_update_post( $my_post );
 
     // 2. UPDATE: Alt-Text (post_meta) setzen, falls noch leer
-    // Wir überschreiben es nur, wenn es nicht schon manuell gesetzt wurde (beim Upload selten der Fall)
     $existing_alt = get_post_meta( $post_ID, '_wp_attachment_image_alt', true );
     
     if ( empty( $existing_alt ) ) {
         update_post_meta( $post_ID, '_wp_attachment_image_alt', $clean_title );
     }
 }
-
-// Wir hängen uns an 'add_attachment', das feuert direkt nach dem Upload
-add_action( 'add_attachment', 'cts_auto_image_attributes' );
+add_action( 'add_attachment', 'seowk_auto_image_attributes' );
