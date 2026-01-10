@@ -20,40 +20,27 @@ function seowk_handle_bulk_noindex( $redirect_to, $action, $post_ids ) {
         }
         $redirect_to = add_query_arg( 'seowk_noindex_set', count( $post_ids ), $redirect_to );
     }
-    
     if ( $action === 'seowk_remove_noindex' ) {
         foreach ( $post_ids as $post_id ) {
             delete_post_meta( $post_id, '_seowk_noindex' );
         }
         $redirect_to = add_query_arg( 'seowk_noindex_removed', count( $post_ids ), $redirect_to );
     }
-    
     return $redirect_to;
 }
 add_filter( 'handle_bulk_actions-edit-post', 'seowk_handle_bulk_noindex', 10, 3 );
 add_filter( 'handle_bulk_actions-edit-page', 'seowk_handle_bulk_noindex', 10, 3 );
 
 function seowk_bulk_noindex_admin_notice() {
-    // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Display only
     if ( ! empty( $_REQUEST['seowk_noindex_set'] ) ) {
-        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $count = intval( $_REQUEST['seowk_noindex_set'] );
-        printf( 
-            '<div class="notice notice-success is-dismissible"><p>%s</p></div>', 
-            /* translators: %d: number of entries */
-            sprintf( esc_html__( 'NoIndex wurde für %d Einträge gesetzt.', 'seo-wunderkiste' ), $count )
-        );
+        printf( '<div class="notice notice-success is-dismissible"><p>%s</p></div>', 
+            sprintf( esc_html__( 'NoIndex wurde für %d Einträge gesetzt.', 'seo-wunderkiste' ), $count ) );
     }
-    
-    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
     if ( ! empty( $_REQUEST['seowk_noindex_removed'] ) ) {
-        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $count = intval( $_REQUEST['seowk_noindex_removed'] );
-        printf( 
-            '<div class="notice notice-success is-dismissible"><p>%s</p></div>', 
-            /* translators: %d: number of entries */
-            sprintf( esc_html__( 'NoIndex wurde für %d Einträge entfernt.', 'seo-wunderkiste' ), $count )
-        );
+        printf( '<div class="notice notice-success is-dismissible"><p>%s</p></div>', 
+            sprintf( esc_html__( 'NoIndex wurde für %d Einträge entfernt.', 'seo-wunderkiste' ), $count ) );
     }
 }
 add_action( 'admin_notices', 'seowk_bulk_noindex_admin_notice' );
@@ -68,7 +55,6 @@ add_filter( 'manage_pages_columns', 'seowk_add_noindex_column' );
 function seowk_fill_noindex_column( $column_name, $post_id ) {
     if ( 'seowk_noindex_status' === $column_name ) {
         $is_noindex = get_post_meta( $post_id, '_seowk_noindex', true );
-        
         if ( $is_noindex ) {
             echo '<span style="color: #d63638; font-weight: bold;" title="' . esc_attr__( 'Wird von Suchmaschinen nicht indexiert', 'seo-wunderkiste' ) . '">✗ NoIndex</span>';
         } else {
@@ -83,7 +69,6 @@ function seowk_output_noindex_meta() {
     if ( is_singular() ) {
         $post_id = get_the_ID();
         $is_noindex = get_post_meta( $post_id, '_seowk_noindex', true );
-        
         if ( $is_noindex ) {
             echo '<meta name="robots" content="noindex, nofollow">' . "\n";
         }

@@ -3,6 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /* ------------------------------------------------------------------------- *
  * MODUL: Conversion Tracker
+ * Version: 2.8 - Mit konfigurierbarer Währung
  * ------------------------------------------------------------------------- */
 
 function seowk_conversion_add_meta_box() {
@@ -33,6 +34,9 @@ function seowk_conversion_render_meta_box( $post ) {
     $ads_label = get_post_meta( $post->ID, '_seowk_ads_conversion_label', true );
     $ads_value = get_post_meta( $post->ID, '_seowk_ads_conversion_value', true );
     
+    // Währung aus Einstellungen holen
+    $currency = function_exists( 'seowk_get_conversion_currency' ) ? seowk_get_conversion_currency() : 'EUR';
+    
     ?>
     <div style="padding: 10px 0;">
         <div style="margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #ddd;">
@@ -49,7 +53,15 @@ function seowk_conversion_render_meta_box( $post ) {
             </p>
             
             <p style="margin: 10px 0 5px 0;">
-                <label style="font-weight: 600; display: block; margin-bottom: 3px;"><?php esc_html_e( 'Conversion Value:', 'seo-wunderkiste' ); ?></label>
+                <label style="font-weight: 600; display: block; margin-bottom: 3px;">
+                    <?php 
+                    printf( 
+                        /* translators: %s: currency code */
+                        esc_html__( 'Conversion Value (%s):', 'seo-wunderkiste' ), 
+                        esc_html( $currency ) 
+                    ); 
+                    ?>
+                </label>
                 <input type="number" step="0.01" name="seowk_ga4_conversion_value" value="<?php echo esc_attr( $ga4_value ); ?>" placeholder="49.99" style="width: 100%;" />
             </p>
         </div>
@@ -73,13 +85,30 @@ function seowk_conversion_render_meta_box( $post ) {
             </p>
             
             <p style="margin: 10px 0 5px 0;">
-                <label style="font-weight: 600; display: block; margin-bottom: 3px;"><?php esc_html_e( 'Conversion Value:', 'seo-wunderkiste' ); ?></label>
+                <label style="font-weight: 600; display: block; margin-bottom: 3px;">
+                    <?php 
+                    printf( 
+                        /* translators: %s: currency code */
+                        esc_html__( 'Conversion Value (%s):', 'seo-wunderkiste' ), 
+                        esc_html( $currency ) 
+                    ); 
+                    ?>
+                </label>
                 <input type="number" step="0.01" name="seowk_ads_conversion_value" value="<?php echo esc_attr( $ads_value ); ?>" placeholder="49.99" style="width: 100%;" />
             </p>
         </div>
         
         <div style="background: #f0f6fc; border-left: 3px solid #2271b1; padding: 10px; margin-top: 15px; font-size: 12px;">
             <strong>💡 <?php esc_html_e( 'Tipp:', 'seo-wunderkiste' ); ?></strong> <?php esc_html_e( 'Aktiviere dies auf Danke-Seiten nach Formular-Absendung.', 'seo-wunderkiste' ); ?>
+            <br><small style="color: #666;">
+                <?php 
+                printf( 
+                    /* translators: %s: currency code */
+                    esc_html__( 'Währung: %s (änderbar in den Plugin-Einstellungen)', 'seo-wunderkiste' ), 
+                    esc_html( $currency ) 
+                ); 
+                ?>
+            </small>
         </div>
     </div>
     <?php
@@ -145,6 +174,9 @@ function seowk_conversion_output_tracking() {
     
     $post_id = get_the_ID();
     
+    // Währung holen
+    $currency = function_exists( 'seowk_get_conversion_currency' ) ? seowk_get_conversion_currency() : 'EUR';
+    
     // GA4 Conversion
     $ga4_enabled = get_post_meta( $post_id, '_seowk_ga4_conversion_enabled', true );
     
@@ -160,7 +192,7 @@ function seowk_conversion_output_tracking() {
                     <?php if ( ! empty( $event_value ) ) : ?>
                     gtag('event', '<?php echo esc_js( $event_name ); ?>', {
                         'value': <?php echo floatval( $event_value ); ?>,
-                        'currency': 'EUR'
+                        'currency': '<?php echo esc_js( $currency ); ?>'
                     });
                     <?php else : ?>
                     gtag('event', '<?php echo esc_js( $event_name ); ?>');
@@ -188,7 +220,7 @@ function seowk_conversion_output_tracking() {
                     gtag('event', 'conversion', {
                         'send_to': '<?php echo esc_js( $conversion_id ); ?>/<?php echo esc_js( $conversion_label ); ?>'<?php if ( ! empty( $conversion_value ) ) : ?>,
                         'value': <?php echo floatval( $conversion_value ); ?>,
-                        'currency': 'EUR'<?php endif; ?>
+                        'currency': '<?php echo esc_js( $currency ); ?>'<?php endif; ?>
                     });
                 }
             });

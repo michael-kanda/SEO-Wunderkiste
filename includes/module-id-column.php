@@ -3,20 +3,14 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /* ------------------------------------------------------------------------- *
  * MODUL: ID Column Display
- * Zeigt die Post/Page/Media ID in allen Übersichten an
  * ------------------------------------------------------------------------- */
 
 function seowk_add_id_column( $columns ) {
     $new_columns = array();
-    
     foreach ( $columns as $key => $value ) {
         $new_columns[ $key ] = $value;
-        
-        if ( $key === 'cb' ) {
-            $new_columns['seowk_id'] = 'ID';
-        }
+        if ( $key === 'cb' ) { $new_columns['seowk_id'] = 'ID'; }
     }
-    
     return $new_columns;
 }
 add_filter( 'manage_posts_columns', 'seowk_add_id_column' );
@@ -25,7 +19,6 @@ add_filter( 'manage_media_columns', 'seowk_add_id_column' );
 
 function seowk_add_id_column_to_cpts() {
     $post_types = get_post_types( array( 'public' => true, '_builtin' => false ), 'names' );
-    
     foreach ( $post_types as $post_type ) {
         add_filter( "manage_{$post_type}_posts_columns", 'seowk_add_id_column' );
     }
@@ -49,60 +42,29 @@ add_filter( 'manage_edit-post_sortable_columns', 'seowk_make_id_column_sortable'
 add_filter( 'manage_edit-page_sortable_columns', 'seowk_make_id_column_sortable' );
 add_filter( 'manage_upload_sortable_columns', 'seowk_make_id_column_sortable' );
 
-function seowk_id_column_orderby( $query ) {
-    if ( ! is_admin() ) {
-        return;
-    }
-
-    $orderby = $query->get( 'orderby' );
-
-    if ( 'ID' === $orderby ) {
-        $query->set( 'orderby', 'ID' );
-    }
-}
-add_action( 'pre_get_posts', 'seowk_id_column_orderby' );
-
 function seowk_id_column_css() {
     echo '<style>
         .column-seowk_id { width: 60px !important; text-align: center; }
-        @media screen and (max-width: 782px) {
-            .column-seowk_id { display: none; }
-        }
-        .column-seowk_id strong:hover { color: #135e96; cursor: default; }
+        @media screen and (max-width: 782px) { .column-seowk_id { display: none; } }
+        .column-seowk_id strong { cursor: pointer; }
+        .column-seowk_id strong:hover { color: #135e96; }
     </style>';
 }
 add_action( 'admin_head', 'seowk_id_column_css' );
 
 function seowk_id_column_quick_copy_js() {
     ?>
-    <script type="text/javascript">
+    <script>
     jQuery(document).ready(function($) {
         $('.column-seowk_id strong').each(function() {
-            var $this = $(this);
-            var id = $this.text();
-            
-            $this.attr('title', '<?php echo esc_js( __( 'Klicken zum Kopieren:', 'seo-wunderkiste' ) ); ?> ' + id);
-            $this.css('cursor', 'pointer');
-            
+            var $this = $(this), id = $this.text();
+            $this.attr('title', 'Klicken zum Kopieren: ' + id);
             $this.on('click', function(e) {
                 e.preventDefault();
-                
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(id);
-                } else {
-                    var tempInput = $('<input>');
-                    $('body').append(tempInput);
-                    tempInput.val(id).select();
-                    document.execCommand('copy');
-                    tempInput.remove();
-                }
-                
-                var originalText = $this.text();
+                if (navigator.clipboard) { navigator.clipboard.writeText(id); }
+                var orig = $this.text();
                 $this.text('✓').css('color', '#00a32a');
-                
-                setTimeout(function() {
-                    $this.text(originalText).css('color', '#2271b1');
-                }, 1000);
+                setTimeout(function() { $this.text(orig).css('color', '#2271b1'); }, 1000);
             });
         });
     });

@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /* ------------------------------------------------------------------------- *
- * ADMIN SETTINGS PAGE - SEO WUNDERKISTE v2.7
+ * ADMIN SETTINGS PAGE - SEO WUNDERKISTE v2.8
  * ------------------------------------------------------------------------- */
 
 function seowk_add_admin_menu() {
@@ -33,25 +33,25 @@ function seowk_settings_init() {
     );
 
     // SEO & CONTENT MODULE
-    seowk_add_module_field( 'seowk_enable_meta_settings', 'SEO Meta Settings', 'Erweiterte Meta-Tags: Title, Description, Open Graph, Twitter Cards pro Seite.' );
-    seowk_add_module_field( 'seowk_enable_schema', 'SEO Schema (JSON-LD)', 'Fügt ein Eingabefeld für strukturierte Daten hinzu.' );
-    seowk_add_module_field( 'seowk_enable_bulk_noindex', 'Bulk NoIndex Manager', 'Ermöglicht das massenhafte Setzen/Entfernen von NoIndex.' );
-    seowk_add_module_field( 'seowk_enable_seo_redirects', 'SEO Zombie Killer', 'Leitet leere Anhang-Seiten auf Beiträge um (301).' );
-    seowk_add_module_field( 'seowk_enable_conversion_tracker', 'Conversion Tracker', 'Ermöglicht GA4 und Google Ads Conversion-Tracking.' );
+    seowk_add_module_field( 'seowk_enable_meta_settings', __( 'SEO Meta Settings', 'seo-wunderkiste' ), __( 'Erweiterte Meta-Tags: Title, Description, Open Graph, Twitter Cards pro Seite.', 'seo-wunderkiste' ) );
+    seowk_add_module_field( 'seowk_enable_schema', __( 'SEO Schema (JSON-LD)', 'seo-wunderkiste' ), __( 'Fügt ein Eingabefeld für strukturierte Daten hinzu.', 'seo-wunderkiste' ) );
+    seowk_add_module_field( 'seowk_enable_bulk_noindex', __( 'Bulk NoIndex Manager', 'seo-wunderkiste' ), __( 'Ermöglicht das massenhafte Setzen/Entfernen von NoIndex.', 'seo-wunderkiste' ) );
+    seowk_add_module_field( 'seowk_enable_seo_redirects', __( 'SEO Zombie Killer', 'seo-wunderkiste' ), __( 'Leitet leere Anhang-Seiten auf Beiträge um (301).', 'seo-wunderkiste' ) );
+    seowk_add_module_field( 'seowk_enable_conversion_tracker', __( 'Conversion Tracker', 'seo-wunderkiste' ), __( 'Ermöglicht GA4 und Google Ads Conversion-Tracking.', 'seo-wunderkiste' ) );
     
     // BILD & MEDIA MODULE
-    seowk_add_module_field( 'seowk_enable_resizer', 'Image Resizer (800px/1200px)', 'Button in Mediendetails zum Skalieren (92% Qualität).' );
-    seowk_add_module_field( 'seowk_enable_cleaner', 'Upload Cleaner', 'Dateinamen beim Upload automatisch bereinigen.' );
-    seowk_add_module_field( 'seowk_enable_image_seo', 'Zero-Click Image SEO', 'Auto-Titel & Alt-Tags aus Dateinamen generieren.' );
-    seowk_add_module_field( 'seowk_enable_media_columns', 'Media Inspector', 'Zeigt Dateigröße und Pixelmaße in der Medienübersicht.' );
-    seowk_add_module_field( 'seowk_enable_svg', 'SVG Upload Support', 'Erlaubt das Hochladen von SVG-Dateien mit Sicherheits-Sanitization.' );
+    seowk_add_module_field( 'seowk_enable_resizer', __( 'Image Resizer (800px/1200px)', 'seo-wunderkiste' ), __( 'Button in Mediendetails zum Skalieren (92% Qualität).', 'seo-wunderkiste' ) );
+    seowk_add_module_field( 'seowk_enable_cleaner', __( 'Upload Cleaner', 'seo-wunderkiste' ), __( 'Dateinamen beim Upload automatisch bereinigen.', 'seo-wunderkiste' ) );
+    seowk_add_module_field( 'seowk_enable_image_seo', __( 'Zero-Click Image SEO', 'seo-wunderkiste' ), __( 'Auto-Titel & Alt-Tags aus Dateinamen generieren.', 'seo-wunderkiste' ) );
+    seowk_add_module_field( 'seowk_enable_media_columns', __( 'Media Inspector', 'seo-wunderkiste' ), __( 'Zeigt Dateigröße und Pixelmaße in der Medienübersicht.', 'seo-wunderkiste' ) );
+    seowk_add_module_field( 'seowk_enable_svg', __( 'SVG Upload Support', 'seo-wunderkiste' ), __( 'Erlaubt das Hochladen von SVG-Dateien mit Sicherheits-Sanitization.', 'seo-wunderkiste' ) );
     
     // PERFORMANCE MODULE
-    seowk_add_module_field( 'seowk_disable_emojis', 'Emoji Bloat Remover', 'Entfernt WordPress Emoji-Skripte für schnellere Ladezeiten.' );
+    seowk_add_module_field( 'seowk_disable_emojis', __( 'Emoji Bloat Remover', 'seo-wunderkiste' ), __( 'Entfernt WordPress Emoji-Skripte für schnellere Ladezeiten.', 'seo-wunderkiste' ) );
     
     // SICHERHEIT & ADMIN MODULE
-    seowk_add_module_field( 'seowk_disable_xmlrpc', 'XML-RPC Blocker', 'Schließt die XML-RPC Schnittstelle.' );
-    seowk_add_module_field( 'seowk_enable_login_protection', 'Login Türsteher', 'Versteckt die Login-Seite hinter einem geheimen Parameter.' );
+    seowk_add_module_field( 'seowk_disable_xmlrpc', __( 'XML-RPC Blocker', 'seo-wunderkiste' ), __( 'Schließt die XML-RPC Schnittstelle.', 'seo-wunderkiste' ) );
+    seowk_add_module_field( 'seowk_enable_login_protection', __( 'Login Türsteher', 'seo-wunderkiste' ), __( 'Versteckt die Login-Seite hinter einem geheimen Parameter.', 'seo-wunderkiste' ) );
     
     add_settings_field(
         'seowk_login_protection_key',
@@ -65,12 +65,33 @@ function seowk_settings_init() {
         )
     );
     
-    seowk_add_module_field( 'seowk_enable_comment_blocker', 'Comment Blocker', 'Deaktiviert Kommentare global auf der Website.' );
-    seowk_add_module_field( 'seowk_enable_id_column', 'ID Column Display', 'Zeigt die Post/Page/Media ID in allen Übersichten an.' );
+    seowk_add_module_field( 'seowk_enable_comment_blocker', __( 'Comment Blocker', 'seo-wunderkiste' ), __( 'Deaktiviert Kommentare global auf der Website.', 'seo-wunderkiste' ) );
+    seowk_add_module_field( 'seowk_enable_id_column', __( 'ID Column Display', 'seo-wunderkiste' ), __( 'Zeigt die Post/Page/Media ID in allen Übersichten an.', 'seo-wunderkiste' ) );
     
     // CONTENT TOOLS MODULE
-    seowk_add_module_field( 'seowk_enable_date_shortcode', 'Date Shortcode', 'Fügt aktuelles Datum via Shortcode ein.' );
-    seowk_add_module_field( 'seowk_enable_semantic_blocks', 'Semantic Blocks', 'HTML5 Wrapper-Blöcke für bessere Struktur und SEO.' );
+    seowk_add_module_field( 'seowk_enable_date_shortcode', __( 'Date Shortcode', 'seo-wunderkiste' ), __( 'Fügt aktuelles Datum via Shortcode ein.', 'seo-wunderkiste' ) );
+    seowk_add_module_field( 'seowk_enable_semantic_blocks', __( 'Semantic Blocks', 'seo-wunderkiste' ), __( 'HTML5 Wrapper-Blöcke für bessere Struktur und SEO.', 'seo-wunderkiste' ) );
+    
+    // ZUSÄTZLICHE EINSTELLUNGEN SECTION
+    add_settings_section(
+        'seowk_additional_section',
+        __( 'Zusätzliche Einstellungen', 'seo-wunderkiste' ),
+        'seowk_additional_section_callback',
+        'seo-wunderkiste'
+    );
+    
+    // Währung für Conversion Tracking
+    add_settings_field(
+        'seowk_conversion_currency',
+        __( 'Conversion Währung', 'seo-wunderkiste' ),
+        'seowk_currency_render',
+        'seo-wunderkiste',
+        'seowk_additional_section',
+        array(
+            'label_for' => 'seowk_conversion_currency',
+            'description' => __( 'Währungscode für GA4 und Google Ads Conversion Tracking.', 'seo-wunderkiste' )
+        )
+    );
 }
 add_action( 'admin_init', 'seowk_settings_init' );
 
@@ -108,11 +129,22 @@ function seowk_sanitize_settings( $input ) {
         $sanitized['seowk_login_protection_key'] = sanitize_text_field( $input['seowk_login_protection_key'] );
     }
     
+    // Währung validieren (3-Buchstaben-Code)
+    if ( isset( $input['seowk_conversion_currency'] ) ) {
+        $currency = strtoupper( sanitize_text_field( $input['seowk_conversion_currency'] ) );
+        $currency = preg_replace( '/[^A-Z]/', '', $currency );
+        $sanitized['seowk_conversion_currency'] = substr( $currency, 0, 3 );
+    }
+    
     return $sanitized;
 }
 
 function seowk_section_callback() {
     echo '<p style="font-size: 14px; color: #666;">' . esc_html__( 'Wähle hier die Werkzeuge aus, die du aktivieren möchtest.', 'seo-wunderkiste' ) . '</p>';
+}
+
+function seowk_additional_section_callback() {
+    echo '<p style="font-size: 14px; color: #666;">' . esc_html__( 'Weitere Konfigurationsoptionen für aktive Module.', 'seo-wunderkiste' ) . '</p>';
 }
 
 function seowk_checkbox_render( $args ) {
@@ -140,6 +172,51 @@ function seowk_text_render( $args ) {
     <?php if ( ! empty( $desc ) ) : ?>
         <p class="description"><?php echo wp_kses( $desc, array( 'code' => array() ) ); ?></p>
     <?php endif; ?>
+    <?php
+}
+
+function seowk_currency_render( $args ) {
+    $options = get_option( 'seowk_settings' );
+    $field   = $args['label_for'];
+    $value   = isset( $options[ $field ] ) ? $options[ $field ] : 'EUR';
+    $desc    = isset( $args['description'] ) ? $args['description'] : '';
+    
+    $currencies = array(
+        'EUR' => 'EUR - Euro',
+        'USD' => 'USD - US Dollar',
+        'GBP' => 'GBP - British Pound',
+        'CHF' => 'CHF - Swiss Franc',
+        'AUD' => 'AUD - Australian Dollar',
+        'CAD' => 'CAD - Canadian Dollar',
+        'JPY' => 'JPY - Japanese Yen',
+        'CNY' => 'CNY - Chinese Yuan',
+        'INR' => 'INR - Indian Rupee',
+        'BRL' => 'BRL - Brazilian Real',
+        'MXN' => 'MXN - Mexican Peso',
+        'PLN' => 'PLN - Polish Zloty',
+        'SEK' => 'SEK - Swedish Krona',
+        'NOK' => 'NOK - Norwegian Krone',
+        'DKK' => 'DKK - Danish Krone',
+        'CZK' => 'CZK - Czech Koruna',
+        'HUF' => 'HUF - Hungarian Forint',
+        'RUB' => 'RUB - Russian Ruble',
+        'TRY' => 'TRY - Turkish Lira',
+        'ZAR' => 'ZAR - South African Rand',
+    );
+    ?>
+    <select id="<?php echo esc_attr( $field ); ?>" name="seowk_settings[<?php echo esc_attr( $field ); ?>]">
+        <?php foreach ( $currencies as $code => $label ) : ?>
+            <option value="<?php echo esc_attr( $code ); ?>" <?php selected( $value, $code ); ?>>
+                <?php echo esc_html( $label ); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+    <?php if ( ! empty( $desc ) ) : ?>
+        <p class="description"><?php echo esc_html( $desc ); ?></p>
+    <?php endif; ?>
+    <p class="description">
+        <code><?php esc_html_e( 'Filter:', 'seo-wunderkiste' ); ?> seowk_conversion_currency</code>
+    </p>
     <?php
 }
 
