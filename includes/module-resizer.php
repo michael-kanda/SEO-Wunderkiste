@@ -42,11 +42,22 @@ function ir800_admin_footer_script() {
 add_action( 'admin_footer', 'ir800_admin_footer_script' );
 
 function ir800_ajax_resize_image() {
+    // Validierung
+    if ( ! isset( $_POST['attachment_id'] ) || ! isset( $_POST['security'] ) ) {
+        wp_send_json_error( __( 'Ungültige Anfrage.', 'seo-wunderkiste' ) );
+    }
+    
     $attachment_id = intval( $_POST['attachment_id'] );
     $target_size = isset( $_POST['target_size'] ) ? intval( $_POST['target_size'] ) : 800;
-    if ( ! in_array( $target_size, array( 800, 1200 ) ) ) { $target_size = 800; }
+    if ( ! in_array( $target_size, array( 800, 1200 ), true ) ) { $target_size = 800; }
+    
+    // Nonce prüfen
     check_ajax_referer( 'ir800_resize_' . $attachment_id, 'security' );
-    if ( ! current_user_can( 'upload_files' ) ) { wp_send_json_error( 'Keine Berechtigung.' ); }
+    
+    // Berechtigungen prüfen
+    if ( ! current_user_can( 'upload_files' ) ) { 
+        wp_send_json_error( __( 'Keine Berechtigung.', 'seo-wunderkiste' ) ); 
+    }
     $path = get_attached_file( $attachment_id );
     if ( ! $path || ! file_exists( $path ) ) { wp_send_json_error( 'Datei nicht gefunden.' ); }
     $editor = wp_get_image_editor( $path );
