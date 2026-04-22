@@ -566,4 +566,4 @@ The plugin offers real value for WordPress operators who don't need large all-in
 == Credits ==
 
 Developed with ❤️ by Michael Kanda
-https://developer.designare.at
+https://designare.at
