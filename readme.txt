@@ -1,9 +1,9 @@
 === SEO Wunderkiste ===
 Contributors: michaelkanda
-Tags: seo, meta tags, schema, image optimization, security, performance, noindex, svg, conversion tracking
+Tags: seo, meta tags, schema, image optimization, security, performance, noindex, svg, conversion tracking, lightbox
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 2.7
+Stable tag: 2.10
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -14,7 +14,7 @@ Die modulare All-in-One Lösung für WordPress SEO, Performance, Sicherheit und 
 
 🇩🇪 **DEUTSCHE BESCHREIBUNG**
 
-SEO Wunderkiste vereint **17 leistungsstarke Module** in einem einzigen Plugin. Um die Performance deiner Website zu schützen, sind alle Module standardmäßig deaktiviert. Aktiviere nur die Funktionen, die du wirklich benötigst – unter "Einstellungen → SEO Wunderkiste".
+SEO Wunderkiste vereint **18 leistungsstarke Module** in einem einzigen Plugin. Um die Performance deiner Website zu schützen, sind alle Module standardmäßig deaktiviert. Aktiviere nur die Funktionen, die du wirklich benötigst – unter "Einstellungen → SEO Wunderkiste".
 
 **Das Konzept:** Keine Bloatware, kein Overhead. Jedes Modul lädt nur, wenn es aktiv ist.
 
@@ -56,7 +56,7 @@ GA4 und Google Ads Conversion-Tracking pro Seite:
 * Ideal für Danke-Seiten nach Formular-Absendung
 * Admin-Spalte zeigt aktives Tracking (GA4 / Ads)
 
-= 🖼️ Bild & Media (5 Module) =
+= 🖼️ Bild & Media (6 Module) =
 
 **6. Image Resizer (800px / 1200px)**
 Skaliert Bilder mit einem Klick in der Mediathek:
@@ -92,6 +92,15 @@ Ermöglicht sichere SVG-Uploads:
 * Vorschau in der Mediathek funktioniert
 * Dimensionen werden aus viewBox/width/height extrahiert
 * Admin-Hinweis informiert über aktive Sanitization
+
+**11. Decent Lightbox**
+Schlanker Bild-Lightbox – pro Bild in der Mediathek aktivierbar:
+* Vanilla JavaScript, keine externen Abhängigkeiten (jQuery-frei)
+* Per Checkbox in den Mediathek-Details aktivieren
+* Tastatur-Navigation (ESC zum Schließen, Tab-Trap)
+* `prefers-reduced-motion` wird respektiert
+* Lazy-Aufbau im DOM, lädt erst bei Bedarf
+* Vollbild-Anzeige mit Spinner während Bildvorbereitung
 
 = ⚡ Performance (1 Modul) =
 
@@ -203,7 +212,7 @@ Beim Löschen des Plugins über "Plugins → Löschen" werden automatisch alle D
 
 🇬🇧 **ENGLISH DESCRIPTION**
 
-SEO Wunderkiste combines **17 powerful modules** in a single plugin. To protect your site's performance, all modules are disabled by default. Enable only the features you actually need – under "Settings → SEO Wunderkiste".
+SEO Wunderkiste combines **18 powerful modules** in a single plugin. To protect your site's performance, all modules are disabled by default. Enable only the features you actually need – under "Settings → SEO Wunderkiste".
 
 **The concept:** No bloatware, no overhead. Each module only loads when active.
 
@@ -245,7 +254,7 @@ GA4 and Google Ads conversion tracking per page:
 * Ideal for thank-you pages after form submission
 * Admin column shows active tracking (GA4 / Ads)
 
-= 🖼️ Image & Media (5 Modules) =
+= 🖼️ Image & Media (6 Modules) =
 
 **6. Image Resizer (800px / 1200px)**
 Scales images with one click in the media library:
@@ -281,6 +290,15 @@ Enables secure SVG uploads:
 * Preview in media library works
 * Dimensions extracted from viewBox/width/height
 * Admin notice informs about active sanitization
+
+**11. Decent Lightbox**
+Lightweight image lightbox – enable per image in the media library:
+* Vanilla JavaScript, no external dependencies (jQuery-free)
+* Toggle via checkbox in media library item details
+* Keyboard navigation (ESC to close, Tab-trap)
+* Respects `prefers-reduced-motion`
+* Lazy DOM build, only loaded when needed
+* Full-screen display with spinner during image preload
 
 = ⚡ Performance (1 Module) =
 
@@ -452,6 +470,14 @@ When deleting the plugin via "Plugins → Delete", all data is automatically rem
 5. Conversion Tracker Meta-Box | Conversion Tracker meta box
 
 == Changelog ==
+
+= 2.10 =
+* NEU: Decent Lightbox als integriertes Modul (vormals eigenständiges Plugin)
+* NEU: Pro-Bild aktivierbare Lightbox direkt in der Mediathek
+* VERBESSERT: Plugin-Meta-Links zeigen jetzt auf designare.at
+* NEW: Decent Lightbox integrated as a module (previously a standalone plugin)
+* NEW: Per-image enabled lightbox directly in the media library
+* IMPROVED: Plugin meta links now point to designare.at
 
 = 2.7 =
 * NEU: Semantic Blocks Modul mit 10 HTML5-Wrapper-Blöcken

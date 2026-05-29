@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: SEO Wunderkiste
- * Plugin URI: https://developer.designare.at/seo-wunderkiste
+ * Plugin URI: https://designare.at/seo-wunderkiste
  * Description: Deine modulare All-in-One Lösung: SEO Schema, Meta Settings, Bild-Optimierung, Cleaner, Security, Tracking & mehr.
  * Version: 2.10
  * Author: Michael Kanda
- * Author URI: https://developer.designare.at
+ * Author URI: https://designare.at
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: seo-wunderkiste
@@ -189,8 +189,8 @@ add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'seowk_add_set
 function seowk_add_plugin_meta_links( $links, $file ) {
     if ( strpos( $file, basename( __FILE__ ) ) !== false ) {
         $new_links = array(
-            '<a href="https://developer.designare.at/seo-wunderkiste/docs" style="color: #d63638; font-weight: 600;">' . __( 'Dokumentation', 'seo-wunderkiste' ) . '</a>',
-            '<a href="https://developer.designare.at/support" style="color: #2271b1;">' . __( 'Support', 'seo-wunderkiste' ) . '</a>'
+            '<a href="https://designare.at/seo-wunderkiste" style="color: #d63638; font-weight: 600;">' . __( 'Dokumentation', 'seo-wunderkiste' ) . '</a>',
+            '<a href="https://designare.at/seo-wunderkiste" style="color: #2271b1;">' . __( 'Support', 'seo-wunderkiste' ) . '</a>'
         );
         $links = array_merge( $links, $new_links );
     }
