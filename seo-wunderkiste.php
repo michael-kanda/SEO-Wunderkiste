@@ -3,7 +3,7 @@
  * Plugin Name: SEO Wunderkiste
  * Plugin URI: https://developer.designare.at/seo-wunderkiste
  * Description: Deine modulare All-in-One Lösung: SEO Schema, Meta Settings, Bild-Optimierung, Cleaner, Security, Tracking & mehr.
- * Version: 2.9
+ * Version: 2.10
  * Author: Michael Kanda
  * Author URI: https://developer.designare.at
  * License: GPL-2.0+
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * PLUGIN CONSTANTS
  * ------------------------------------------------------------------------- */
 
-define( 'SEOWK_VERSION', '2.9' );
+define( 'SEOWK_VERSION', '2.10' );
 define( 'SEOWK_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SEOWK_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'SEOWK_PLUGIN_FILE', __FILE__ );
@@ -109,6 +109,10 @@ if ( seowk_is_module_active( 'seowk_enable_media_columns' ) ) {
 
 if ( seowk_is_module_active( 'seowk_enable_svg' ) ) {
     require_once SEOWK_PLUGIN_DIR . 'includes/module-svg.php';
+}
+
+if ( seowk_is_module_active( 'seowk_enable_lightbox' ) ) {
+    require_once SEOWK_PLUGIN_DIR . 'includes/module-decent-lightbox.php';
 }
 
 // PERFORMANCE MODULE
@@ -271,6 +275,7 @@ function seowk_get_available_modules() {
             'seowk_enable_image_seo'     => __( 'Zero-Click Image SEO', 'seo-wunderkiste' ),
             'seowk_enable_media_columns' => __( 'Media Inspector', 'seo-wunderkiste' ),
             'seowk_enable_svg'           => __( 'SVG Upload Support', 'seo-wunderkiste' ),
+            'seowk_enable_lightbox'      => __( 'Decent Lightbox', 'seo-wunderkiste' ),
         ),
         'performance' => array(
             'seowk_disable_emojis' => __( 'Emoji Bloat Remover', 'seo-wunderkiste' ),

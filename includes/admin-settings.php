@@ -45,6 +45,7 @@ function seowk_settings_init() {
     seowk_add_module_field( 'seowk_enable_image_seo', __( 'Zero-Click Image SEO', 'seo-wunderkiste' ), __( 'Auto-Titel & Alt-Tags aus Dateinamen generieren.', 'seo-wunderkiste' ) );
     seowk_add_module_field( 'seowk_enable_media_columns', __( 'Media Inspector', 'seo-wunderkiste' ), __( 'Zeigt Dateigröße und Pixelmaße in der Medienübersicht.', 'seo-wunderkiste' ) );
     seowk_add_module_field( 'seowk_enable_svg', __( 'SVG Upload Support', 'seo-wunderkiste' ), __( 'Erlaubt das Hochladen von SVG-Dateien mit Sicherheits-Sanitization.', 'seo-wunderkiste' ) );
+    seowk_add_module_field( 'seowk_enable_lightbox', __( 'Decent Lightbox', 'seo-wunderkiste' ), __( 'Schlanker Bild-Lightbox: Pro Bild in der Mediathek aktivierbar (Vanilla JS, ohne Abhängigkeiten).', 'seo-wunderkiste' ) );
     
     // PERFORMANCE MODULE
     seowk_add_module_field( 'seowk_disable_emojis', __( 'Emoji Bloat Remover', 'seo-wunderkiste' ), __( 'Entfernt WordPress Emoji-Skripte für schnellere Ladezeiten.', 'seo-wunderkiste' ) );
@@ -116,7 +117,7 @@ function seowk_sanitize_settings( $input ) {
         'seowk_enable_meta_settings', 'seowk_enable_schema', 'seowk_enable_bulk_noindex',
         'seowk_enable_seo_redirects', 'seowk_enable_conversion_tracker', 'seowk_enable_resizer',
         'seowk_enable_cleaner', 'seowk_enable_image_seo', 'seowk_enable_media_columns',
-        'seowk_enable_svg', 'seowk_disable_emojis', 'seowk_disable_xmlrpc',
+        'seowk_enable_svg', 'seowk_enable_lightbox', 'seowk_disable_emojis', 'seowk_disable_xmlrpc',
         'seowk_enable_login_protection', 'seowk_enable_comment_blocker', 'seowk_enable_id_column',
         'seowk_enable_date_shortcode', 'seowk_enable_semantic_blocks',
     );
